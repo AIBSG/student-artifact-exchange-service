@@ -50,6 +50,8 @@ body {
 }
 
 .registration__btn {
+   display: block;
+   margin: 0 auto;
    width: 566px;
    height: 54px;
    font-family: 'Montserrat', sans-serif;
