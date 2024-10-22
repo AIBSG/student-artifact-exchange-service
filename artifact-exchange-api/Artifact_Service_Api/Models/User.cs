@@ -2,10 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Artifact_Service_Api.Models;
 
-public class User
+public class User : BaseEntity
 {
-    [Key]
-    public long Id { get; set; }
 
     [DataType(DataType.EmailAddress)]
     public string? Email { get; set; }
@@ -18,8 +16,7 @@ public class User
     public int RegistryCode { get; set; }
 
     public bool GAcoount { get; set; }
+    public virtual List<DocumentNoteAccess> DocumentNoteAccesses { get; set; }
+    public virtual List<NoteAccess> NoteAccess { get; set; }
 
-    public List<Note> Notes { get; set; } = [];
-    public List<NoteAccess> NoteAccesses { get; set; } = [];
-    public List<DocumentNoteAccess> DocumentNoteAccesses { get; set; } = [];
 }

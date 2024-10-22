@@ -1,16 +1,16 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Artifact_Service_Api.Models;
 
-public class NoteTag
+public class NoteTag : BaseEntity
 {
-    [Key]
-    public long NoteId { get; set; }
+    [ForeignKey("Note")]
+    public Guid NoteId { get; set; }
 
-    [Key]
-    public long TagId { get; set; }
+    [ForeignKey("Tag")]
+    public Guid TagId { get; set; }
+    public virtual Note Note { get; set; }
 
-    public Note Note { get; set; } = new Note();
-
-    public Tag Tag { get; set; } = new Tag();
+    public virtual Tag Tag { get; set; }
 }

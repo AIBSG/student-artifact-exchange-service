@@ -1,28 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "D:\\My projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj": {}
+    "C:\\Users\\gglol\\Desktop\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj": {}
   },
   "projects": {
-    "D:\\My projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj": {
+    "C:\\Users\\gglol\\Desktop\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\My projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
+        "projectUniqueName": "C:\\Users\\gglol\\Desktop\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
         "projectName": "Artifact_Service_Api",
-        "projectPath": "D:\\My projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\My projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\obj\\",
+        "projectPath": "C:\\Users\\gglol\\Desktop\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
+        "packagesPath": "C:\\Users\\gglol\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gglol\\Desktop\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\gglol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -86,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

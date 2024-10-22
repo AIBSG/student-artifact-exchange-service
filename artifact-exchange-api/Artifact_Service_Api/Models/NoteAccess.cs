@@ -1,15 +1,15 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Artifact_Service_Api.Models;
 
-public class NoteAccess
+public class NoteAccess : BaseEntity
 {
-    [Key]
-    public long NoteId { get; set; }
+    [ForeignKey("User")]
+    public Guid UserId { get; set; } 
 
-    [Key]
-    public long UserID { get; set; }
-
+    [ForeignKey("Note")]
+    public Guid NoteId { get; set; }
     public bool CanEdit { get; set; }
 
     public virtual User User { get; set; } = new User();

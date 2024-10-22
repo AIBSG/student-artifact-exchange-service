@@ -1,6 +1,0 @@
-@ArtidactExchangeApi_HostAddress = http://localhost:5047
-
-GET {{ArtidactExchangeApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

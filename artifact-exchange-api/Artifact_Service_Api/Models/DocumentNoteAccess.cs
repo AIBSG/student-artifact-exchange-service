@@ -1,15 +1,16 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Artifact_Service_Api.Models;
 
-public class DocumentNoteAccess
+public class DocumentNoteAccess : BaseEntity
 {
-    [Key]
-    public long DocumentNoteId { get; set; }
+    [ForeignKey("User")]
+    public Guid UserId { get; set; } 
 
-    [Key]
-    public long UserId { get; set; }
+    [ForeignKey("DocumentNote")]
+    public Guid DocumentNoteId { get; set; } 
+    public virtual User User { get; set; } 
+    public virtual DocumentNote DocumentNote { get; set; }
 
-    public virtual User User { get; set; } = new User();
-    public virtual DocumentNote DocumentNote { get; set; } = new DocumentNote();
 }
