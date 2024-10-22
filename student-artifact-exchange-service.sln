@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artifact-exchange-api", "artifact-exchange-api", "{F2912E8B-3D19-4EF4-BE63-15D825056D22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artifact_Service_Api", "artifact-exchange-api\Artifact_Service_Api\Artifact_Service_Api.csproj", "{53603D43-A928-4FF5-841B-5F39777B900C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53603D43-A928-4FF5-841B-5F39777B900C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53603D43-A928-4FF5-841B-5F39777B900C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53603D43-A928-4FF5-841B-5F39777B900C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53603D43-A928-4FF5-841B-5F39777B900C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{53603D43-A928-4FF5-841B-5F39777B900C} = {F2912E8B-3D19-4EF4-BE63-15D825056D22}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DFA312DF-D178-4BBC-BFCA-5DD5E4A5F829}
+	EndGlobalSection
+EndGlobal
