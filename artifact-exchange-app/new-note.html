@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="./styles/new-note.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+   <title>New Note</title>
+</head>
+<body>
+   <div class="new__note">
+      <div class="sidebar">
+         <div class="sidebar__profile">
+            <img src="./images/profile.svg" alt="" class="profile__img">
+            <p class="profile__name">Email пользователя</p>
+         </div>
+         <div class="sidebar__nav">
+            <div class="sidebar__item active">
+               <img src="./images/main.svg" alt="" class="sidebar__img">
+               <a class="sidebar__item-link" href="#">Главная</a>
+            </div>
+            <div class="sidebar__btn">
+               <button class="sidebar__btn-note">
+                  <img src="./images/new-note.svg" alt="" class="sidebar__img">
+                  <p class="sidebar__text-btn">Новая заметка</p>
+               </button>
+            </div>
+            <div class="sidebar__btn">
+               <button class="sidebar__btn-file">
+                  <img src="./images/new-file.svg" alt="" class="sidebar__img">
+                  <p class="sidebar__text-btn">Новый файл</p>
+               </button>
+            </div>
+            <div class="sidebar__item">
+               <img src="./images/notes.svg" alt="" class="sidebar__img">
+               <a class="sidebar__item-link" href="#">Заметки и файлы</a>
+            </div>
+         </div>
+         <div class="sidebar__exit">
+            <img src="./images/exit.svg" alt="" class="sidebar__img">
+            <a class="sidebar__item-link" href="#">Выход</a>
+         </div>
+      </div>
+
+      <div class="note">
+         <div class="note__wrapper">
+            <div class="note__inner">
+               <div class="note__title">
+                  <input type="text" placeholder="Заголовок">
+               </div>
+               <div class="note__text">
+                  <textarea placeholder="Текст"></textarea>
+               </div>
+            </div>
+            <div class="note__share">
+               <p class="note__status">Чтение</p>
+               <div class="note__share-btn">
+                  <button class="note__share-button">
+                     <img src="./images/share.svg" alt="" class="note__share-img">
+                     <p class="note__text-btn">Поделиться</p>
+                  </button>
+               </div>
+            </div> 
+         </div>
+
+         <div class="note__options">
+            <div class="note__add-options">
+               <div class="add__file">
+                  <img src="./images/add-file.svg" alt="" class="add__file-img">
+                  <input type="file" class="add__file-input">
+               </div>
+               <div class="add__tag">
+                  <img src="./images/add-tag.svg" alt="" class="add__tag-img">
+                  <input type="text" id="tag" name="tag" list="tag-options" placeholder="Добавить тег">
+                  <datalist id="tag-options">
+                     <option value="Тег1 ">
+                     <option value="Тег 2">
+                     <option value="Тег 3">
+                  </datalist>
+               </div>
+            </div>
+
+            <div class="note__actions">
+               <div class="note__action">
+                  <button class="note__action-btn">
+                     <img src="./images/save.svg" alt="" class="note__img">
+                     <p class="note__text-btn__save">Сохранить</p>
+                  </button>
+               </div>
+               <div class="note__action">
+                  <button class="note__action-btn">
+                     <img src="./images/delete.svg" alt="" class="note__img">
+                     <p class="note__text-btn__delete">Удалить</p>
+                  </button>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+</body>
+</html>
