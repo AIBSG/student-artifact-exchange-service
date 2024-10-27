@@ -6,7 +6,6 @@ public class File : BaseEntity
 {
     public string? CustomFileName { get; set; }
     public string? ServerFileName { get; set; }
-    public string? FilePath { get; set; }
     //public DocumentNote? DocumentNote { get; set; }
     //public Note? Note { get; set; }
 }

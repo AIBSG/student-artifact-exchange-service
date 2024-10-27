@@ -1,4 +1,5 @@
 ﻿using Artifact_Service_Api.AppData;
+using Artifact_Service_Api.Dtos;
 using Artifact_Service_Api.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ namespace Artifact_Service_Api.Service
             _context = context;
         }
 
-        private async Task<IEnumerable<DocumentNote>?> GetAllUserDocuments(Guid userId) =>
+        private async Task<IEnumerable<DocumentNote>?> GetUserDocuments(Guid userId) =>
            await _context.DocumentNotes
             .Include(x => x.File)
             .Include(x => x.Author)
@@ -44,20 +45,43 @@ namespace Artifact_Service_Api.Service
             .Select(x => x.Files)
             .FirstOrDefaultAsync();
 
-        public IEnumerable<DocumentNote> GetAllDocuments(Guid userId) => 
-            GetAllUserDocuments(userId).Result.Concat(GetAvailableDocuments(userId).Result);
+        public IEnumerable<DocumentNote> GetAllUserDocuments(Guid userId) => 
+            GetUserDocuments(userId).Result.Concat(GetAvailableDocuments(userId).Result);
 
-        public IEnumerable<DocumentNote> GetAllDocumentsByTag(Guid userId, Guid tagId) => 
-            GetAllDocuments(userId).Where(x => x.DocumentNoteTags.Select(x => x.Tag.Id).Contains(tagId));
+        public IEnumerable<DocumentNote> GetAllUserDocumentsByTag(Guid userId, Guid tagId) => 
+            GetAllUserDocuments(userId).Where(x => x.DocumentNoteTags.Select(x => x.Tag.Id).Contains(tagId));
 
         public async Task<IEnumerable<DocumentNote>?> GetAllOpenDocuments() => 
             await _context.DocumentNotes.Where(x => x.IsOpen).ToListAsync();
        
-        public IEnumerable<DocumentNote>? GeOpenDocumentsByTag(Guid tagId) => 
+        public IEnumerable<DocumentNote>? GetOpenDocumentsByTag(Guid tagId) => 
             GetAllOpenDocuments().Result.Where(x => x.DocumentNoteTags.Select(x => x.Tag.Id).Contains(tagId));
 
-
-
-
+        public async Task<DocumentNote> SaveNewDocument(SaveDocumentRequest request, string serverFileName)
+        {
+            var result = new DocumentNote();
+            result.Author = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.AuthorId);
+            result.Title = request.Title;
+            result.Description = request.Description;
+            result.DocumentNoteAccesses = null;
+            result.IsOpen = request.IsOpen;
+            result.DocumentNoteTags = new List<DocumentNoteTag>();
+            var currentTags =  await _context.Tags.Where(x => request.TagsNames.Contains(x.Name)).ToListAsync();
+            foreach ( var tag in currentTags)
+            {
+                result.DocumentNoteTags.Add(new DocumentNoteTag() { 
+                    DocumentNote = result,
+                    DocumentNoteId = result.Id,
+                    Id = Guid.NewGuid(), Tag = tag, 
+                    TagId = tag.Id });
+            }
+            result.File = new Models.File() { 
+                Id = Guid.NewGuid(),
+                CustomFileName = request.File.FileName,
+                ServerFileName = serverFileName };
+            await _context.Set<DocumentNote>().AddAsync(result);
+            await _context.SaveChangesAsync();
+            return result;
+        }
     }
 }
