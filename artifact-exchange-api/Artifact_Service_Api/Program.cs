@@ -15,7 +15,7 @@ builder.Services.AddScoped<IFileStorageService, FileStorageSercvice>();
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection1"))); // Здесь я указал свою строку подключения
 
 var app = builder.Build();
 
