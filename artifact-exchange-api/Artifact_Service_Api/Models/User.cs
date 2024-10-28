@@ -13,7 +13,7 @@ public class User : BaseEntity
 
     public bool ActivatedEmail { get; set; }
 
-    public int RegistryCode { get; set; }
+    public int? RegistryCode { get; set; }
 
     public bool GAcoount { get; set; }
     public virtual List<DocumentNoteAccess> DocumentNoteAccesses { get; set; }
