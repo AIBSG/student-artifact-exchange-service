@@ -17,6 +17,7 @@ public class NoteController(AppDbContext context) : ControllerBase
         await _context.Notes
             .Where(n => n.IsOpen)
             .Include(n => n.NoteTags)
+            .Include(n => n.NoteAccess)
             .Include(n => n.Author)
             .ToListAsync();
 
@@ -27,6 +28,7 @@ public class NoteController(AppDbContext context) : ControllerBase
             .Include(n => n.NoteTags)
             .Include(n => n.Author)
             .Include(n => n.Files)
+            .Include(n => n.NoteAccess)
             .FirstOrDefaultAsync(n => n.Id == id);
         if (note == null) return NotFound();
         return Ok(note);
@@ -36,16 +38,20 @@ public class NoteController(AppDbContext context) : ControllerBase
     public async Task<IEnumerable<Note>> GetAllNotesByUser(Guid userId) =>
         await _context.Notes
             .Where(n => n.Author.Id == userId && n.IsOpen)
+            .Include(n => n.NoteAccess)
+            .Include(n => n.NoteTags)
             .ToListAsync();
 
     [HttpGet]
     public async Task<IEnumerable<Note>> GetMyNotes(Guid userId) =>
         await _context.Notes
             .Where(n => n.Author.Id == userId)
+            .Include(n => n.NoteAccess)
+            .Include(n => n.NoteTags)
             .ToListAsync();
 
     [HttpPost]
-    public async Task<IActionResult> CreateNote(SaveNoteRequest request)
+    public async Task<IActionResult> CreateNote(SaveNoteRequest request, string serverFileName)
     {
         var note = new Note();
         note.Author = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.AuthorId);
@@ -66,9 +72,17 @@ public class NoteController(AppDbContext context) : ControllerBase
                 TagId = tag.Id
             });
         }
+        note.Files = [];
+        foreach (var file in request.Files)
+        {
+            note.Files.Add(new Models.File {
+                Id = Guid.NewGuid(),
+                CustomFileName = file.FileName,
+                ServerFileName = serverFileName
+            });
+        } 
         await _context.Notes.AddAsync(note);
         await _context.SaveChangesAsync();
         return Ok(note);
-        
     }
 }

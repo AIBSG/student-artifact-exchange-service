@@ -10,5 +10,5 @@ public class SaveNoteRequest
     public string? Text { get; set; }
     public bool IsOpen { get; set; }
     public IEnumerable<string>? TagsNames { get; set; }
-
+    public IEnumerable<IFormFile>? Files { get; set; }
 }
