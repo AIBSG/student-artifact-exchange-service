@@ -8,7 +8,7 @@ namespace Artifact_Service_Api.Dtos
         public string? Title { get; set; }
         public string? Description { get; set; }
         public bool IsOpen { get; set; }
-        public IEnumerable<string> TagsNames { get; set; }
-        public IFormFile File {  get; set; }
+        public IEnumerable<string>? TagsNames { get; set; }
+        public IFormFile? File {  get; set; }
     }
 }
