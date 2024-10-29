@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.VisualBasic;
 using System.Runtime;
 using System;
-using System.Web;
+using Microsoft.AspNetCore.Hosting;
 using System.Data;
 
 namespace Artifact_Service_Api.Service
@@ -12,15 +12,20 @@ namespace Artifact_Service_Api.Service
     public class FileStorageSercvice : IFileStorageService
     {
 
-        public FileStorageSercvice() { }
+        private Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnv;
+        //костыль надо исправить 
+        private readonly string _storagePath = "C:\\Users\\gglol\\Desktop\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\FileStorage\\"; 
+       
 
-        private readonly string _root = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _storage = "FilesStorage";
+        public FileStorageSercvice(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        {
+            this.hostingEnv = env;
+        }
 
         public async Task<byte[]>?  GetFileBites(Models.File file)
         {
             
-            var filePath = Path.Combine(_root, _storage, file.ServerFileName);
+            var filePath = Path.Combine(_storagePath, file.ServerFileName);
             if (!System.IO.File.Exists(filePath)) return null;
             return await System.IO.File.ReadAllBytesAsync(filePath);
         }
@@ -54,7 +59,8 @@ namespace Artifact_Service_Api.Service
             var serverFileName = string.Format("{0}{1}"
             , Guid.NewGuid().ToString("N")
             , Path.GetExtension(file.FileName));
-            var path = Path.Combine(_root, _storage, serverFileName);
+            
+            var path = Path.Combine(_storagePath, serverFileName);
             using (FileStream fs = System.IO.File.Create(path))
             {
                 file.CopyTo(fs);
