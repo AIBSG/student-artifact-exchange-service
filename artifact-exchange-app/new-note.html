@@ -100,11 +100,11 @@
    </div>
 
    <!-- Подтверждение удаления заметки -->
-   <template id="approve">
+   <dialog id="approve__open">
       <div class="modal__overlay">
          <section class="approve__action">
             <div class="approve__inner">
-            <h2 class="approve__title">Удалить заметку?</h2>
+               <h2 class="approve__title">Удалить заметку?</h2>
                <div class="approve__btn">
                   <button type="submit" class="approve__cancel">Отменить</button>
                   <button type="submit" class="approve__delete">Удалить</button>
@@ -112,7 +112,46 @@
             </div>
          </section>
       </div>
-   </template>
+   </dialog>
+
+   <!-- Окно с предоставлением возможности поделиться заметкой -->
+   <dialog id="share__open">
+      <div class="modal__overlay">
+         <section class="share__action">
+            <div class="share__inner">
+               <div class="share__header">
+                  <h2 class="share__title">Поделиться</h2>
+                  <div class="share__input">
+                     <input type="checkbox">
+                     <p class="share__status">Чтение для всех</p>
+                  </div>
+               </div>
+               <div class="share__user">
+                  <input type="email" placeholder="Введите email">
+                  <form class="share__choose-status">
+                     <select class="share__options" name="status">
+                       <option value="apple">Чтение</option>
+                       <option value="banana">Редактирование</option>
+                     </select>
+                  </form>
+               </div>
+               <h3 class="share__list-title">Пользователи с доступом</h3>
+               <div class="user__with-access">
+                  <img class="user__logo" src="./images/user.svg" alt="">
+                  <p class="user__email">Почта пользователя</p>
+               </div>
+               <div class="user__with-access">
+                  <img class="user__logo" src="./images/user.svg" alt="">
+                  <p class="user__email">Почта пользователя</p>
+               </div>
+               <div class="share__btn">
+                  <button type="submit" class="share__cancel">Отменить</button>
+                  <button type="submit" class="share__save">Сохранить</button>
+               </div>
+            </div>
+         </section>
+      </div>
+   </dialog>
 
 </body>
 </html>
