@@ -286,3 +286,66 @@ a {
 .note__text-btn__delete {
    color: #EF0202;
 }
+
+.modal__overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.5);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 1000;
+}
+
+.approve__action {
+   margin: auto;
+   width: 365px;
+   height: 160px;
+   background-color: #fff;
+   border-radius: 10px;
+   
+}
+
+.approve__inner {
+   padding: 31px 63px;
+   font-family: 'Montserrat', sans-serif;
+}
+
+.approve__title {
+   font-size: 20px;
+   font-weight: 600;
+   margin: 0;
+   margin-bottom: 37px;
+   text-align: center;
+}
+
+.approve__btn {
+   display: flex;
+   justify-content: space-between;
+}
+
+.approve__cancel {
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   background-color: #fff;
+   font-size: 16px;
+   font-weight: 500;
+   color: #B2B2B2; 
+   cursor: pointer;
+}
+
+.approve__delete {
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   color: #fff;
+   background-color: #2B2B2B;
+   padding: 10px 21px;
+   border-radius: 10px;
+   font-size: 16px;
+   font-weight: 500;
+   cursor: pointer;
+}
+
