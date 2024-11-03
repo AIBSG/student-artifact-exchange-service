@@ -5,7 +5,6 @@ namespace Artifact_Service_Api.Dtos;
 public class EditNoteRequest
 {
     public Guid NoteId { get; set; }
-    public Guid AuthorId { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
     public string? Text { get; set; }

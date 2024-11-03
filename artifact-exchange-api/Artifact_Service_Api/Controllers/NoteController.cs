@@ -105,33 +105,52 @@ public class NoteController(AppDbContext context) : ControllerBase
         var userAccess = await _context.NoteAccesses.Where(n => n.NoteId == id && n.UserId == userId).FirstOrDefaultAsync();
         if (!userAccess.CanEdit) return Forbid();
         
-        _request.AuthorId = note.Author.Id;
         _request.NoteId = note.Id;
         _request.Title = note.Title;
         _request.Description = note.Description;
         _request.Text = note.Text;
         _request.IsOpen = note.IsOpen;
         _request.TagsNames = await _context.NoteTags.Where(nt => nt.NoteId == id).Select(nt => nt.Tag.Name).ToListAsync();
+        _request.FilesNames = note.Files.Select(f => f.CustomFileName);
 
-        return Ok();
+        return Ok(_request);
     }
 
     [HttpPut]
-    public async Task<IActionResult> EditNote(Guid id, SaveNoteRequest request)
+    public async Task<IActionResult> EditNote(EditNoteRequest request, string serverFileName)
     {
-        var note = await _context.Notes.FindAsync(id);
-        if (note == null) return NotFound();
-
-        request.Title = note.Title;
-        request.Description = note.Description;
-        request.Text = note.Text;
-        request.IsOpen = note.IsOpen;
-        request.TagsNames = await _context.NoteTags.Where(nt => nt.NoteId == id).Select(nt => nt.Tag.Name).ToListAsync();
-
+        request = _request;
+        var note = await _context.Notes.FindAsync(request.NoteId);
+        
         note.Title = request.Title;
         note.Description = request.Description;
         note.Text = request.Text;
         note.IsOpen = request.IsOpen;
+        var newTags = await _context.Tags.Where(t => request.TagsNames.Contains(t.Name)).ToListAsync();
+        foreach (var tag in newTags)
+        {
+            if (!note.NoteTags.Any(nt => nt.TagId == tag.Id))
+            {
+                var noteTag = await _context.NoteTags.FindAsync(tag.Id);
+                if (noteTag == null)
+                {
+                    note.NoteTags.Add(new NoteTag{
+                        NoteId = note.Id,
+                        TagId = tag.Id 
+                    });
+                    continue;
+                }
+                note.NoteTags.Remove(noteTag);
+            }
+        }
+        foreach (var fileName in request.FilesNames)
+        {
+            if (!note.Files.Any(f => f.CustomFileName == fileName))
+            {
+                var file = await _context.Files.FindAsync(fileName, note.Id);
+                if (file != null) note.Files.Remove(file);
+            }
+        }
 
         return Ok();
     }
