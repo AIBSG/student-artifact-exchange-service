@@ -48,7 +48,7 @@
          <div class="note__share">
             <p class="note__status">Чтение</p>
             <div class="note__share-btn">
-               <button class="note__share-button">
+               <button type="button" class="note__share-button">
                   <img src="./images/share.svg" alt="" class="note__share-img">
                   <p class="note__text-btn">Поделиться</p>
                </button>
@@ -100,7 +100,7 @@
    </div>
 
    <!-- Подтверждение удаления заметки -->
-   <dialog id="approve__open">
+   <div class="approve__open hidden">
       <div class="modal__overlay">
          <section class="approve__action">
             <div class="approve__inner">
@@ -112,10 +112,10 @@
             </div>
          </section>
       </div>
-   </dialog>
+   </div>
 
    <!-- Окно с предоставлением возможности поделиться заметкой -->
-   <dialog id="share__open">
+   <div class="share__open hidden">
       <div class="modal__overlay">
          <section class="share__action">
             <div class="share__inner">
@@ -127,31 +127,33 @@
                   </div>
                </div>
                <div class="share__user">
-                  <input type="email" placeholder="Введите email">
+                  <input type="email" placeholder="Введите email" required>
                   <form class="share__choose-status">
                      <select class="share__options" name="status">
-                       <option value="apple">Чтение</option>
-                       <option value="banana">Редактирование</option>
+                       <option value="reading">Чтение</option>
+                       <option value="editing">Редактирование</option>
                      </select>
                   </form>
                </div>
                <h3 class="share__list-title">Пользователи с доступом</h3>
-               <div class="user__with-access">
-                  <img class="user__logo" src="./images/user.svg" alt="">
-                  <p class="user__email">Почта пользователя</p>
-               </div>
-               <div class="user__with-access">
-                  <img class="user__logo" src="./images/user.svg" alt="">
-                  <p class="user__email">Почта пользователя</p>
+               
+               <div class="users__with-access">
+                  <div class="user__with-access">
+                     <img class="user__logo" src="./images/user.svg" alt="">
+                     <p class="user__email">Почта пользователя</p>
+                  </div>
+                  <div class="user__with-access">
+                     <img class="user__logo" src="./images/user.svg" alt="">
+                     <p class="user__email">Почта пользователя</p>
+                  </div>
                </div>
                <div class="share__btn">
-                  <button type="submit" class="share__cancel">Отменить</button>
-                  <button type="submit" class="share__save">Сохранить</button>
+                  <button type="reset" class="share__cancel">Отменить</button>
+                  <button type="button" class="share__save">Сохранить</button>
                </div>
             </div>
          </section>
       </div>
-   </dialog>
-
+   </div>
 </body>
 </html>

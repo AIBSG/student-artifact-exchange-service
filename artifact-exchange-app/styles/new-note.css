@@ -287,6 +287,10 @@ a {
    color: #EF0202;
 }
 
+.hidden {
+   display: none;
+}
+
 .modal__overlay {
    position: fixed;
    top: 0;
@@ -435,6 +439,9 @@ a {
 .user__with-access {
    display: flex;
    align-items: center;
+}
+
+.user__with-access:first-child {
    margin-bottom: 17px;
 }
 
