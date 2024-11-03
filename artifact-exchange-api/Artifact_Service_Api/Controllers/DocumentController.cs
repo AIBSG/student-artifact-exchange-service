@@ -34,10 +34,10 @@ namespace Artifact_Service_Api.Controllers
             Ok(_fileService.GetAllUserDocuments(userId));
 
         [HttpGet]
-        public async Task<IActionResult> GetDocumentFile(Models.File file) =>
-         Ok(File(_fileStorageService.GetFileBites(file).Result, 
+        public async Task<IActionResult> GetDocumentFile([FromQuery] Models.File file) =>
+         File(_fileStorageService.GetFileBites(file).Result, 
              MimeTypes.GetMimeType(file.ServerFileName), 
-             file.CustomFileName));
+             file.CustomFileName);
 
         [HttpPost]
         public async Task<IActionResult> SaveNewDocument (SaveDocumentRequest request)

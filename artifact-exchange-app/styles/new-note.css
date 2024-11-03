@@ -73,8 +73,6 @@ a {
    margin-bottom: 41px;
 }
 
-
-
 .active {
    background-color: #B3B3B3;
    margin-right: 16px;
@@ -141,22 +139,15 @@ a {
    width: 100%;
    margin: 10px;
    background-color: #fff;
-   padding: 120px 210px;
+   padding-left: 210px;
+   padding-right: 210px;
    border-radius: 15px;
    display: flex;
    flex-direction: column;
-   justify-content: space-between;
-}
-
-.note__wrapper {
-   display: flex;
-   justify-content: space-between;
 }
 
 .note__inner {
-   flex-grow: 1;
-   display: flex;
-   flex-direction: column;
+   width: 100%;
 }
 
 .note__title {
@@ -193,10 +184,10 @@ a {
 .note__share {
    display: flex;
    align-items: center;
-   align-self: flex-start;
+   align-self: end;
+   padding-top: 50px;
+   margin-bottom: 50px;
    gap: 22px;
-   margin-left: 20px;
-   padding-top: 15px;
 }
 
 .note__share-button {
@@ -227,12 +218,14 @@ a {
    display: flex;
    align-items: end;
    justify-content: space-between;
+   flex: 1;
+   padding-bottom: 120px;
 }
 
 .note__add-options {
    display: flex;
    align-items: center;
-   gap: 50px;
+   gap: 30px;
 }
 
 .add__file input{
