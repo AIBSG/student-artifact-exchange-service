@@ -62,24 +62,32 @@
                   <textarea class="input__text" placeholder="Текст"></textarea>
             </div>
          </div>
-
+         
          <div class="note__options">
             <div class="note__add-options">
                <div class="add__file">
-                  <img src="./images/add-file.svg" alt="" class="add__file-img">
-                  <input type="file" class="add__file-input">
-               </div>
-               <div class="add__tag">
-                  <img src="./images/add-tag.svg" alt="" class="add__tag-img">
-                  <input type="text" id="tag" name="tag" list="tag-options" placeholder="Добавить тег">
-                  <datalist id="tag-options">
-                     <option value="Тег1 ">
-                     <option value="Тег 2">
-                     <option value="Тег 3">
-                  </datalist>
+                  <div class="add__file-inner">
+                     <img src="./images/add-file.svg" alt="" class="add__file-img">
+                     <input type="file" class="add__file-input">
+                  </div>
+                  <div class="file__link hidden">
+                     <a href="#" target="_blank" class="file__open-link"></a>
+                     <button type="button" class="file__delete-button">
+                        <img class="file__delete-img" src="./images/close-file.svg" alt="">
+                     </button>
+                  </div>
                </div>
             </div>
-
+            <div class="add__tag">
+               <img src="./images/add-tag.svg" alt="" class="add__tag-img">
+               <input type="text" id="tag" name="tag" list="tag-options" placeholder="Добавить тег">
+               <datalist id="tag-options">
+                  <option value="Тег1 ">
+                  <option value="Тег 2">
+                  <option value="Тег 3">
+               </datalist>
+            </div>
+                     
             <div class="note__actions">
                <div class="note__action">
                   <button type="button" class="note__action-btn">
@@ -95,10 +103,10 @@
                </div>
             </div>
          </div>
-
+         
       </div>
    </div>
-
+            
    <!-- Подтверждение удаления заметки -->
    <div class="approve__open hidden">
       <div class="modal__overlay">

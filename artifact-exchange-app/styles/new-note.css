@@ -232,7 +232,17 @@ a {
    cursor: pointer;
 }
 
-.add__file, 
+.add__file-inner {
+   display: flex;
+   align-items: center;
+}
+
+.file__link {
+   display: flex;
+   align-items: center;
+   margin-top: 20px;
+}
+
 .add__tag {
    display: flex;
    align-items: center;
@@ -251,6 +261,12 @@ a {
    font-weight: 500;
    font-family: 'Montserrat', sans-serif;
    color: #B3B3B3;
+}
+
+.file__delete-button {
+   background-color: #fff;
+   border: none;
+   cursor: pointer;
 }
 
 .add__tag input::placeholder {
