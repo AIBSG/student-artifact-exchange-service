@@ -2846,11 +2846,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
+      "projectUniqueName": "d:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
       "projectName": "Artifact_Service_Api",
-      "projectPath": "D:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
+      "projectPath": "d:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\obj\\",
+      "outputPath": "d:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

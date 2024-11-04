@@ -10,6 +10,5 @@ namespace Artifact_Service_Api.Dtos
         public bool IsOpen { get; set; }
         public IEnumerable<string>? TagsNames { get; set; }
         public IFormFile? File {  get; set; }
-        public IFormFile File {  get; set; }
     }
 }
