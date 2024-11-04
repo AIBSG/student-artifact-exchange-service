@@ -82,13 +82,13 @@
 
             <div class="note__actions">
                <div class="note__action">
-                  <button class="note__action-btn">
+                  <button type="button" class="note__action-btn">
                      <img src="./images/save.svg" alt="" class="note__img">
                      <p class="note__text-btn__save">Сохранить</p>
                   </button>
                </div>
                <div class="note__action">
-                  <button class="note__action-btn">
+                  <button type="button" class="note__action-btn delete">
                      <img src="./images/delete.svg" alt="" class="note__img">
                      <p class="note__text-btn__delete">Удалить</p>
                   </button>
@@ -106,8 +106,8 @@
             <div class="approve__inner">
                <h2 class="approve__title">Удалить заметку?</h2>
                <div class="approve__btn">
-                  <button type="submit" class="approve__cancel">Отменить</button>
-                  <button type="submit" class="approve__delete">Удалить</button>
+                  <button type="button" class="approve__cancel">Отменить</button>
+                  <button type="button" class="approve__delete">Удалить</button>
                </div>
             </div>
          </section>
@@ -127,7 +127,7 @@
                   </div>
                </div>
                <div class="share__user">
-                  <input type="email" placeholder="Введите email" required>
+                  <input class="input__email" type="email" placeholder="Введите email" required>
                   <form class="share__choose-status">
                      <select class="share__options" name="status">
                        <option value="reading">Чтение</option>
@@ -155,5 +155,6 @@
          </section>
       </div>
    </div>
+   <script src="../src/js/main.js" type="module"></script>
 </body>
 </html>
