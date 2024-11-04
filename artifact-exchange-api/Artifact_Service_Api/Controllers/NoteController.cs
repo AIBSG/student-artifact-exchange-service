@@ -112,6 +112,7 @@ public class NoteController(AppDbContext context) : ControllerBase
         _request.IsOpen = note.IsOpen;
         _request.TagsNames = await _context.NoteTags.Where(nt => nt.NoteId == id).Select(nt => nt.Tag.Name).ToListAsync();
         _request.FilesNames = note.Files.Select(f => f.CustomFileName);
+        _request.Emails = await _context.NoteAccesses.Where(na => na.NoteId == id).Select(na => na.User.Email).ToListAsync();
 
         return Ok(_request);
     }
@@ -151,8 +152,39 @@ public class NoteController(AppDbContext context) : ControllerBase
                 if (file != null) note.Files.Remove(file);
             }
         }
+        if (request.Files != null)
+        {
+            foreach (var file in request.Files)
+            {
+                note.Files.Add(new Models.File {
+                    Id = Guid.NewGuid(),
+                    CustomFileName = file.FileName,
+                    ServerFileName = serverFileName
+                });
+            }
+        }
+
+        _context.Notes.Update(note);
+        await _context.SaveChangesAsync();
 
         return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> GiveAccess(string email, bool canEdit, Guid noteId)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (user == null) return NotFound();
+        
+        var noteAccess = new NoteAccess {
+            UserId = user.Id,
+            NoteId = noteId,
+            CanEdit = canEdit
+        };
+
+        await _context.NoteAccesses.AddAsync(noteAccess);
+        await _context.SaveChangesAsync();
+        return Ok(); 
     }
 
     [HttpDelete]

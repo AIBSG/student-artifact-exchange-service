@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Artifact_Service_Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb147ec0cae3b9ff34175f02729092a4d7e3645c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f90e02c2e65f568d48ad5bb446248d08c4c7c41")]
 [assembly: System.Reflection.AssemblyProductAttribute("Artifact_Service_Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Artifact_Service_Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

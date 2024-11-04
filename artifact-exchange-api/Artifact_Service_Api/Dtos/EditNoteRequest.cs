@@ -13,5 +13,4 @@ public class EditNoteRequest
     public IEnumerable<string>? FilesNames { get; set; }
     public IEnumerable<IFormFile>? Files { get; set; }
     public IEnumerable<string>? Emails { get; set; }
-    public IEnumerable<bool>? CanEdit { get; set; }
 }
