@@ -55,9 +55,10 @@ namespace Artifact_Service_Api.Service
         public IEnumerable<DocumentNote>? GetOpenDocumentsByTag(Guid tagId) => 
             GetAllOpenDocuments().Result.Where(x => x.DocumentNoteTags.Select(x => x.Tag.Id).Contains(tagId));
 
-        public async Task<DocumentNote> SaveNewDocument(SaveDocumentRequest request, string serverFileName)
+        public async Task<DocumentNote> SaveNewDocument(NewDocumentRequest request, string serverFileName)
         {
             var result = new DocumentNote();
+            result.Id = Guid.NewGuid();
             result.Author = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.AuthorId);
             result.Title = request.Title;
             result.Description = request.Description;
@@ -65,6 +66,7 @@ namespace Artifact_Service_Api.Service
             result.IsOpen = request.IsOpen;
             result.DocumentNoteTags = new List<DocumentNoteTag>();
             var currentTags =  await _context.Tags.Where(x => request.TagsNames.Contains(x.Name)).ToListAsync();
+
             foreach ( var tag in currentTags)
             {
                 result.DocumentNoteTags.Add(new DocumentNoteTag() { 
@@ -73,12 +75,28 @@ namespace Artifact_Service_Api.Service
                     Id = Guid.NewGuid(), Tag = tag, 
                     TagId = tag.Id });
             }
+
+            var resAccess = new List<DocumentNoteAccess>();
+            var usersToAccess = await _context.Users.Where(x => request.MailsToAccess.Contains(x.Email)).ToArrayAsync();
+
+            foreach (var user in usersToAccess)
+            {
+                resAccess.Add(new DocumentNoteAccess()
+                {
+                    DocumentNoteId = result.Id,
+                    UserId = user.Id,
+                    Id = Guid.NewGuid()
+                });
+            }
+
             result.File = new Models.File() { 
                 Id = Guid.NewGuid(),
                 CustomFileName = request.File.FileName,
                 ServerFileName = serverFileName };
+
             await _context.Set<DocumentNote>().AddAsync(result);
             await _context.SaveChangesAsync();
+
             return result;
         }
     }
