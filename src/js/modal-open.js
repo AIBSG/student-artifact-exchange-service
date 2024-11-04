@@ -5,6 +5,7 @@ const deleteNoteButton = document.querySelector('.delete');
 const approveOpen = document.querySelector('.approve__open');
 const cancelDeleteButton = document.querySelector('.approve__cancel');
 const inputEmail = document.querySelector('.input__email');
+const shareOptions = document.querySelector('.share__options');
 
 //Открытие и закрытие окна с возможностью поделиться заметкой
 function openShareModal() {
@@ -17,6 +18,9 @@ openShareModal();
 function closeShareModal() {
    cancelButton.addEventListener('click', () => {
       shareOpen.classList.add('hidden');
+      
+      inputEmail.value = '';
+      shareOptions.selectedIndex = 0;
    });
 }
 closeShareModal();
