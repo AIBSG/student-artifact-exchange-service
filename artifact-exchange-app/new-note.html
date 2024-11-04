@@ -56,49 +56,57 @@
          </div> 
          <div class="note__wrapper">
             <div class="note__title">
-                  <input type="text" placeholder="Заголовок">
+                  <input class="input__title" type="text" placeholder="Заголовок" required>
                </div>
                <div class="note__text">
-                  <textarea placeholder="Текст"></textarea>
+                  <textarea class="input__text" placeholder="Текст"></textarea>
             </div>
          </div>
-
+         
          <div class="note__options">
             <div class="note__add-options">
                <div class="add__file">
-                  <img src="./images/add-file.svg" alt="" class="add__file-img">
-                  <input type="file" class="add__file-input">
-               </div>
-               <div class="add__tag">
-                  <img src="./images/add-tag.svg" alt="" class="add__tag-img">
-                  <input type="text" id="tag" name="tag" list="tag-options" placeholder="Добавить тег">
-                  <datalist id="tag-options">
-                     <option value="Тег1 ">
-                     <option value="Тег 2">
-                     <option value="Тег 3">
-                  </datalist>
+                  <div class="add__file-inner">
+                     <img src="./images/add-file.svg" alt="" class="add__file-img">
+                     <input type="file" class="add__file-input">
+                  </div>
+                  <div class="file__link hidden">
+                     <a href="#" target="_blank" class="file__open-link"></a>
+                     <button type="button" class="file__delete-button">
+                        <img class="file__delete-img" src="./images/close-file.svg" alt="">
+                     </button>
+                  </div>
                </div>
             </div>
-
+            <div class="add__tag">
+               <img src="./images/add-tag.svg" alt="" class="add__tag-img">
+               <input type="text" id="tag" name="tag" list="tag-options" placeholder="Добавить тег">
+               <datalist id="tag-options">
+                  <option value="Тег1 ">
+                  <option value="Тег 2">
+                  <option value="Тег 3">
+               </datalist>
+            </div>
+                     
             <div class="note__actions">
                <div class="note__action">
-                  <button class="note__action-btn">
+                  <button type="button" class="note__action-btn">
                      <img src="./images/save.svg" alt="" class="note__img">
                      <p class="note__text-btn__save">Сохранить</p>
                   </button>
                </div>
                <div class="note__action">
-                  <button class="note__action-btn">
+                  <button type="button" class="note__action-btn delete">
                      <img src="./images/delete.svg" alt="" class="note__img">
                      <p class="note__text-btn__delete">Удалить</p>
                   </button>
                </div>
             </div>
          </div>
-
+         
       </div>
    </div>
-
+            
    <!-- Подтверждение удаления заметки -->
    <div class="approve__open hidden">
       <div class="modal__overlay">
@@ -106,8 +114,8 @@
             <div class="approve__inner">
                <h2 class="approve__title">Удалить заметку?</h2>
                <div class="approve__btn">
-                  <button type="submit" class="approve__cancel">Отменить</button>
-                  <button type="submit" class="approve__delete">Удалить</button>
+                  <button type="button" class="approve__cancel">Отменить</button>
+                  <button type="button" class="approve__delete">Удалить</button>
                </div>
             </div>
          </section>
@@ -127,7 +135,7 @@
                   </div>
                </div>
                <div class="share__user">
-                  <input type="email" placeholder="Введите email" required>
+                  <input class="input__email" type="email" placeholder="Введите email" required>
                   <form class="share__choose-status">
                      <select class="share__options" name="status">
                        <option value="reading">Чтение</option>
@@ -155,5 +163,6 @@
          </section>
       </div>
    </div>
+   <script src="../src/js/main.js" type="module"></script>
 </body>
 </html>
