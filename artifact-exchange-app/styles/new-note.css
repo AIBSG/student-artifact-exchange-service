@@ -303,6 +303,11 @@ a {
    color: #EF0202;
 }
 
+.isDisabled {
+   cursor: not-allowed;
+   opacity: 0.3;
+}
+
 .hidden {
    display: none;
 }

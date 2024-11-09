@@ -1,0 +1,186 @@
+html {
+   box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+   box-sizing: inherit;
+}
+
+body {
+   margin: 0;
+   padding: 0;
+   font-family: 'Montserrat', sans-serif;
+   font-size: 16px;
+   font-weight: 400;
+   color: #000;
+}
+
+.modal__overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.5);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 1000;
+}
+
+.file__modal-inner {
+   width: 684px;
+   background-color: #fff;
+   border-radius: 15px;
+   padding: 25px 35px;
+   font-family: 'Montserrat', sans-serif;
+}
+
+.close__file-btn {
+   text-align: end;
+}
+
+.close__file-creating {
+   padding: 0;
+   background-color: #fff;
+   border: none;
+}
+
+.file__title {
+   margin-bottom: 10px;
+}
+
+.file__title input {
+   border: none;
+   width: 100%;
+   outline: none;
+   font-size: 30px;
+   font-weight: 700;
+}
+
+.file__title input::placeholder {
+   font-family: 'Montserrat', sans-serif;
+   font-size: 30px;
+   font-weight: 700;
+   color: #B3B3B3;
+}
+
+.file__text textarea {
+   border: none;
+   outline: none;
+   font-size: 16px;
+   width: 100%;
+   resize: none;
+   margin-bottom: 100px;
+}
+
+.file__text textarea::placeholder {
+   font-family: 'Montserrat', sans-serif;
+   font-size: 16px;
+   color: #B3B3B3;
+}
+
+.add__file {
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 10px;
+}
+
+.add__file input{
+   cursor: pointer;
+   border: none;
+   outline: none;
+   font-size: 14px;
+   font-weight: 500;
+   font-family: 'Montserrat', sans-serif;
+   color: #B3B3B3;
+}
+
+.add__file-inner {
+   display: flex;
+}
+
+.add__file-img {
+   margin-right: 8px;
+}
+
+.file__delete-button {
+   background-color: #fff;
+   border: none;
+   cursor: pointer;
+}
+
+.add__tag {
+   display: flex;
+   align-items: center;
+   margin-bottom: 23px;
+}
+
+.add__tag img {
+   margin-right: 6px;
+}
+
+.add__tag input {
+   border: none;
+   outline: none;
+   font-size: 14px;
+   font-weight: 500;
+   font-family: 'Montserrat', sans-serif;
+   color: #B3B3B3;
+}
+
+.add__tag input::placeholder {
+   color: #B3B3B3;
+}
+
+.file__edit-options {
+   display: flex;
+   justify-content: space-between;
+}
+
+.file__action-btn__delete {
+   font-family: 'Montserrat', sans-serif;
+   font-size: 14px;
+   font-weight: 500;
+   color: #EF0202;
+   display: flex;
+   align-items: center;
+   padding: 0;
+   background-color: #fff;
+   border: none;
+   cursor: pointer;
+}
+
+.file__action-btn__delete img {
+   margin-right: 8px;
+}
+
+.file__action-btn__save {
+   font-family: 'Montserrat', sans-serif;
+   font-size: 16px;
+   font-weight: 500;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding-top: 15px;
+   padding-bottom: 15px;
+   border-radius: 10px;
+   border: none;
+   background-color: #2B2B2B;
+   color: #fff;
+   cursor: pointer;
+}
+
+.hidden {
+   display: none;
+}
+
+.isDisabled {
+   cursor: not-allowed;
+   opacity: 0.8;
+}
+
+
