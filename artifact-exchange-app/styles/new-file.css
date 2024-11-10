@@ -17,6 +17,11 @@ body {
    color: #000;
 }
 
+a {
+   text-decoration: none;
+   color: #000;
+}
+
 .modal__overlay {
    position: fixed;
    top: 0;
@@ -42,10 +47,12 @@ body {
    text-align: end;
 }
 
-.close__file-creating {
+.close__file-creating, 
+.close__file-editing {
    padding: 0;
    background-color: #fff;
    border: none;
+   cursor: pointer;
 }
 
 .file__title {
@@ -140,7 +147,7 @@ body {
    justify-content: space-between;
 }
 
-.file__action-btn__delete {
+.file__action-edit-btn__delete {
    font-family: 'Montserrat', sans-serif;
    font-size: 14px;
    font-weight: 500;
@@ -153,11 +160,12 @@ body {
    cursor: pointer;
 }
 
-.file__action-btn__delete img {
+.file__action-edit-btn__delete img {
    margin-right: 8px;
 }
 
-.file__action-btn__save {
+.file__action-create-btn__save,
+.file__action-edit-btn__save {
    font-family: 'Montserrat', sans-serif;
    font-size: 16px;
    font-weight: 500;
@@ -171,6 +179,55 @@ body {
    border: none;
    background-color: #2B2B2B;
    color: #fff;
+   cursor: pointer;
+}
+
+.approve__action {
+   margin: auto;
+   width: 365px;
+   height: 160px;
+   background-color: #fff;
+   border-radius: 10px;
+   
+}
+
+.approve__inner {
+   padding: 31px 63px;
+   font-family: 'Montserrat', sans-serif;
+}
+
+.approve__title {
+   font-size: 20px;
+   font-weight: 600;
+   margin: 0;
+   margin-bottom: 37px;
+   text-align: center;
+}
+
+.approve__btn {
+   display: flex;
+   justify-content: space-between;
+}
+
+.approve__cancel {
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   background-color: #fff;
+   font-size: 16px;
+   font-weight: 500;
+   color: #B2B2B2; 
+   cursor: pointer;
+}
+
+.approve__delete {
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   color: #fff;
+   background-color: #2B2B2B;
+   padding: 10px 21px;
+   border-radius: 10px;
+   font-size: 16px;
+   font-weight: 500;
    cursor: pointer;
 }
 

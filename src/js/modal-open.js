@@ -8,14 +8,14 @@ const inputEmail = document.querySelector('.input__email');
 const shareOptions = document.querySelector('.share__options');
 
 //Открытие и закрытие окна с возможностью поделиться заметкой
-function openShareModal() {
+
+if (shareButton) {
    shareButton.addEventListener('click', () => {
       shareOpen.classList.remove('hidden');
    });
 }
-openShareModal();
 
-function closeShareModal() {
+if (cancelButton) {
    cancelButton.addEventListener('click', () => {
       shareOpen.classList.add('hidden');
       
@@ -23,20 +23,18 @@ function closeShareModal() {
       shareOptions.selectedIndex = 0;
    });
 }
-closeShareModal();
-
 
 //Окрытие и закрытие окна с подтверждением удаления заметки
-function openApproveModal() {
+if (deleteNoteButton) {
    deleteNoteButton.addEventListener('click', () => {
       approveOpen.classList.remove('hidden');
    });
 }
-openApproveModal();
 
-function closeApproveModal() {
+
+if (cancelDeleteButton) {
    cancelDeleteButton.addEventListener('click', () => {
       approveOpen.classList.add('hidden');
    });
 }
-closeApproveModal();
+
