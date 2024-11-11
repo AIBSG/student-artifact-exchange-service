@@ -11,6 +11,5 @@ namespace Artifact_Service_Api.Dtos
         public IEnumerable<string> MailsToAccess { get; set; }
         public IEnumerable<string>? TagsNames { get; set; }
         public IFormFile? File {  get; set; }
-        public IFormFile File {  get; set; }
     }
 }
