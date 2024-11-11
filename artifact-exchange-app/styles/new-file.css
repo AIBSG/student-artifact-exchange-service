@@ -17,6 +17,11 @@ body {
    color: #000;
 }
 
+a {
+   text-decoration: none;
+   color: #000;
+}
+
 .modal__overlay {
    position: fixed;
    top: 0;
@@ -42,10 +47,12 @@ body {
    text-align: end;
 }
 
-.close__file-creating {
+.close__file-creating, 
+.close__file-editing {
    padding: 0;
    background-color: #fff;
    border: none;
+   cursor: pointer;
 }
 
 .file__title {
@@ -112,10 +119,15 @@ body {
    cursor: pointer;
 }
 
+.tag-and-share {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
 .add__tag {
    display: flex;
    align-items: center;
-   margin-bottom: 23px;
 }
 
 .add__tag img {
@@ -135,12 +147,37 @@ body {
    color: #B3B3B3;
 }
 
+.file__share-button {
+   padding: 0;
+   display: flex;
+   align-items: center;
+   background-color: #fff;
+   border: none;
+   cursor: pointer;
+}
+
+.file__share-button img {
+   margin-right: 8px;
+}
+
+.file__text-btn {
+   margin: 0;
+   font-family: 'Montserrat', sans-serif;
+   color: #B3B3B3;
+   font-size: 14px;
+   font-weight: 500;
+}
+
+.file__edit-share__btn {
+   margin-bottom: 15px;
+}
+
 .file__edit-options {
    display: flex;
    justify-content: space-between;
 }
 
-.file__action-btn__delete {
+.file__action-edit-btn__delete {
    font-family: 'Montserrat', sans-serif;
    font-size: 14px;
    font-weight: 500;
@@ -153,11 +190,12 @@ body {
    cursor: pointer;
 }
 
-.file__action-btn__delete img {
+.file__action-edit-btn__delete img {
    margin-right: 8px;
 }
 
-.file__action-btn__save {
+.file__action-create-btn__save,
+.file__action-edit-btn__save {
    font-family: 'Montserrat', sans-serif;
    font-size: 16px;
    font-weight: 500;
@@ -171,6 +209,198 @@ body {
    border: none;
    background-color: #2B2B2B;
    color: #fff;
+   cursor: pointer;
+   margin-top: 23px;
+}
+
+.approve__action {
+   margin: auto;
+   width: 365px;
+   height: 160px;
+   background-color: #fff;
+   border-radius: 10px;
+   
+}
+
+.approve__inner {
+   padding: 31px 63px;
+   font-family: 'Montserrat', sans-serif;
+}
+
+.approve__title {
+   font-size: 20px;
+   font-weight: 600;
+   margin: 0;
+   margin-bottom: 37px;
+   text-align: center;
+}
+
+.approve__btn {
+   display: flex;
+   justify-content: space-between;
+}
+
+.approve__cancel {
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   background-color: #fff;
+   font-size: 16px;
+   font-weight: 500;
+   color: #B2B2B2; 
+   cursor: pointer;
+}
+
+.approve__delete {
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   color: #fff;
+   background-color: #2B2B2B;
+   padding: 10px 21px;
+   border-radius: 10px;
+   font-size: 16px;
+   font-weight: 500;
+   cursor: pointer;
+}
+
+.share__action {
+   width: 684px;
+   background-color: #fff;
+   border-radius: 15px;
+}
+
+.share__inner {
+   padding: 35px 35px;
+   font-family: 'Montserrat', sans-serif;
+}
+
+.share__header {
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 43px;
+}
+
+.share__input {
+   display: flex;
+   align-items: center;
+}
+
+.share__input input {
+   margin-right: 20px;
+}
+
+.share__input input[type="checkbox"] {
+   width: 20px;
+   height: 20px;
+}
+
+.share__status {
+   font-size: 14px;
+   font-weight: 500;
+}
+
+.share__title {
+   font-size: 20px;
+   font-weight: 500;
+   margin: 0;
+}
+
+.share__user {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 34px;
+}
+
+.share__user input {
+   font-family: 'Montserrat', sans-serif;
+   width: 444px;
+   border: 1px solid #D4D4D4;
+   border-radius: 10px;
+   font-size: 16px;
+   padding: 18px 20px;
+}
+
+.share__user input::placeholder {
+   font-size: 16px;
+   font-weight: 500;
+   color: #B3B3B3;
+}
+
+.share__options {
+   font-family: 'Montserrat', sans-serif;
+   appearance: none;
+   border-radius: 10px;
+   text-align: center;
+   background-color: #2B2B2B;
+   color: #fff;
+   font-size: 14px;
+   font-weight: 500;
+   width: 161px;
+   height: 57px;
+}
+
+.share__list-title {
+   font-size: 16px;
+   font-weight: 500;
+   margin-bottom: 20px;
+}
+
+.users__with-access {
+   max-height: 150px;
+   overflow-y: auto;
+}
+
+.user__with-access__inner {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.user__with-access {
+   display: flex;
+   align-items: center;
+}
+
+.user__mode-text {
+   font-size: 16px;
+   font-weight: 500;
+   color: #B3B3B3;
+}
+
+.user__logo {
+   margin-right: 13px;
+}
+
+.user__email {
+   font-weight: 500;
+   color: #B3B3B3;
+}
+
+.share__btn {
+   margin-top: 43px;
+   text-align: end;
+}
+
+.share__cancel {
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   background-color: #fff;
+   font-size: 16px;
+   font-weight: 500;
+   color: #B2B2B2; 
+   cursor: pointer;
+   margin-right: 10px;
+}
+
+.share__save {
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   color: #fff;
+   background-color: #2B2B2B;
+   padding: 12px 25px;
+   border-radius: 10px;
+   font-size: 16px;
+   font-weight: 500;
    cursor: pointer;
 }
 
