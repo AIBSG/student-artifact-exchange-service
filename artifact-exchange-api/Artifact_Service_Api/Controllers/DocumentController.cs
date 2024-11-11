@@ -5,6 +5,7 @@ using Artifact_Service_Api.AppData;
 using Microsoft.OpenApi.Validations;
 using Microsoft.EntityFrameworkCore;
 using Artifact_Service_Api.Models;
+using System.Reflection.Metadata;
 
 namespace Artifact_Service_Api.Controllers
 {
@@ -40,12 +41,52 @@ namespace Artifact_Service_Api.Controllers
              file.CustomFileName);
 
         [HttpPost]
-        public async Task<IActionResult> SaveNewDocument (SaveDocumentRequest request)
+        public async Task<IActionResult> SaveNewDocument (NewDocumentRequest request)
         {
             var serverFileName = _fileStorageService.SaveNewFileInStorage(request.File);
             return Ok(await _fileService.SaveNewDocument(request, serverFileName));
 
         }
-        
+
+        [HttpPatch]
+        public async Task<IActionResult> SaveCangesDocument(DocumentChangesRequest request)
+        {
+            var document = await _context.DocumentNotes
+                .Include(x => x.DocumentNoteTags)
+                .Where(x => x.Id.Equals(request.DocumentId)).FirstOrDefaultAsync();
+            document.Title = request.Title;
+            document.Description = request.Description;
+            if (document == null) return BadRequest();
+            //var pastTags = await _context.DocumentNoteTags.Where(x => x.Id.Equals(request.DocumentId)).FirstOrDefaultAsync();
+            document.DocumentNoteTags = new List<DocumentNoteTag>();
+            var currentTags = await _context.Tags.Where(x => request.TagsNames.Contains(x.Name)).ToListAsync();
+
+            foreach (var tag in currentTags)
+            {
+                document.DocumentNoteTags.Add(new DocumentNoteTag()
+                {
+                    DocumentNote = document,
+                    DocumentNoteId = document.Id,
+                    Id = Guid.NewGuid(),
+                    Tag = tag,
+                    TagId = tag.Id
+                });
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteDocument(Guid documnetId)
+        {
+            var document = await _context.DocumentNotes.Where(x => x.Id.Equals(documnetId)).FirstOrDefaultAsync();
+            if (document == null) return BadRequest();
+            _context.DocumentNotes.Remove(document);
+            await _context.SaveChangesAsync();
+            return Ok();   
+        }
+
+
     }
 }
