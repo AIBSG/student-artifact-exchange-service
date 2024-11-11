@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj": {}
+    "D:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj": {}
   },
   "projects": {
-    "d:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj": {
+    "D:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
+        "projectUniqueName": "D:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
         "projectName": "Artifact_Service_Api",
-        "projectPath": "d:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
+        "projectPath": "D:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\Artifact_Service_Api.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "d:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\obj\\",
+        "outputPath": "D:\\Marat\\My_Projects\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
