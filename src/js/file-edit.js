@@ -1,4 +1,5 @@
 import { MAX_FILE_TEXT_LENGTH, MAX_FILE_TITLE_LENGTH } from "./const.js";
+import { openShareModal, closeShareModal } from "./modal-open.js";
 
 const fileEditTitleInput = document.querySelector('.input__edit-file__title');
 const fileEditTextInput = document.querySelector('.input__edit-file__text');
@@ -8,6 +9,8 @@ const saveEditFileButton = document.querySelector('.file__action-edit-btn__save'
 const deleteEditFileButton = document.querySelector('.file__action-edit-btn__delete');
 const cancelDeleteEditFileButton = document.querySelector('.approve__cancel');
 const approveOpen = document.querySelector('.approve__open');
+const shareButton = editFileModal.querySelector('.file__share-button');
+const cancelButton = document.querySelector('.share__cancel');
 
 //Ограничение количества символов в заголовке и в описании
 if (fileEditTitleInput) {
@@ -58,4 +61,13 @@ if (cancelDeleteEditFileButton) {
    cancelDeleteEditFileButton.addEventListener('click', () => {
       approveOpen.classList.add('hidden');
    });
+}
+
+//Открытие и закрытие окна с возможностью поделиться заметкой
+if (shareButton) {
+   shareButton.addEventListener('click', openShareModal)
+}
+
+if (cancelButton) {
+   cancelButton.addEventListener('click', closeShareModal)
 }

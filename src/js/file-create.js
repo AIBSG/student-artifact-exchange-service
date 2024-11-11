@@ -1,4 +1,5 @@
 import {MAX_FILE_TITLE_LENGTH, MAX_FILE_TEXT_LENGTH} from './const.js';
+import { openShareModal, closeShareModal } from './modal-open.js';
 
 const fileTitleInput = document.querySelector('.input__file-title');
 const fileTextInput = document.querySelector('.input__file-text');
@@ -9,6 +10,8 @@ const createFileLinkContainer = document.querySelector('.file__link');
 const createFileOpenLink = document.querySelector('.file__open-link');
 const saveCreateFileButton = document.querySelector('.file__action-create-btn__save');
 const createFileDeleteButton = document.querySelector('.file__delete-button');
+const shareButton = createFileModal.querySelector('.file__share-button');
+const cancelButton = document.querySelector('.share__cancel');
 
 //Ограничение количества символов в заголовке и в описании
 if (fileTitleInput) {
@@ -51,11 +54,12 @@ createFileInput.addEventListener('change', () => {
 
 //Если заголовок, текст и поле файла заметки-файла пусты, кнопка сохранить недоступна
 function toggleSaveButton() {
-   if (fileTitleInput.value.length > 0 && fileTextInput.value.length > 0 && createFileInput.files.length > 0) {
-      saveCreateFileButton.classList.remove('isDisabled');
-   } else {
-      
-      saveCreateFileButton.classList.add('isDisabled');
+   if (fileTitleInput && fileTextInput && createFileInput) {
+      if (fileTitleInput.value.length > 0 && fileTextInput.value.length > 0 && createFileInput.files.length > 0) {
+         saveCreateFileButton.classList.remove('isDisabled');
+      } else {
+         saveCreateFileButton.classList.add('isDisabled');
+      }
    }
 }
 
@@ -75,4 +79,14 @@ if (createFileDeleteButton) {
       createFileLinkContainer.classList.add('hidden');
       toggleSaveButton(); 
    });
+}
+
+
+//Открытие и закрытие окна с возможностью поделиться заметкой
+if (shareButton) {
+   shareButton.addEventListener('click', openShareModal)
+}
+
+if (cancelButton) {
+   cancelButton.addEventListener('click', closeShareModal)
 }
