@@ -457,6 +457,11 @@ a {
    margin-bottom: 20px;
 }
 
+.users__with-access {
+   max-height: 150px;
+   overflow-y: auto;
+}
+
 .user__with-access__inner {
    display: flex;
    align-items: center;
