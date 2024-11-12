@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fff;
+    color: #333;
+    
+    height: 1400px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    width: 1400px;
+    margin: 0 auto;
+}
+
+
+.register-btn{
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.login-btn {
+    margin-left: 10px;
+    padding: 10px 20px;
+    color: #000000;
+    border: none;
+    cursor: pointer;   
+}
+
+main {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+
+.hero h1 {
+    font-size: 70px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.start-btn {
+    padding: 15px 30px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+
+.open-notes h2 {
+    font-size: 28px;
+    margin-top: 280px;
+    margin-bottom: 40px;
+}
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 0 50px;
+}
+
+.note {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    max-width: 340px;
+    border: 2px solid #ddd;
+}
+
+.note p {
+    color: #B3B3B3;
+}
+
+.note h3 {
+    margin: 15px 0 10px;
+}
+
+footer {
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+}
+
+.note-footer {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+    margin-top: 10px;
+}
+
+.edit-icon{
+    margin-left: 70px;
+}
