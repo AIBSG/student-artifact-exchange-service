@@ -6,6 +6,8 @@ using Microsoft.OpenApi.Validations;
 using Microsoft.EntityFrameworkCore;
 using Artifact_Service_Api.Models;
 using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Http.Metadata;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Artifact_Service_Api.Controllers
 {
@@ -31,7 +33,7 @@ namespace Artifact_Service_Api.Controllers
             
 
         [HttpGet]
-        public async Task<IActionResult> GetUserDocuments(Guid userId) =>
+        public async Task<IActionResult> GetUserDocuments([FromQuery] Guid userId) =>
             Ok(_fileService.GetAllUserDocuments(userId));
 
         [HttpGet]
@@ -41,7 +43,7 @@ namespace Artifact_Service_Api.Controllers
              file.CustomFileName);
 
         [HttpPost]
-        public async Task<IActionResult> SaveNewDocument (NewDocumentRequest request)
+        public async Task<IActionResult> SaveNewDocument ([FromForm] NewDocumentRequest request)
         {
             var serverFileName = _fileStorageService.SaveNewFileInStorage(request.File);
             return Ok(await _fileService.SaveNewDocument(request, serverFileName));
@@ -49,7 +51,7 @@ namespace Artifact_Service_Api.Controllers
         }
 
         [HttpPatch]
-        public async Task<IActionResult> SaveCangesDocument(DocumentChangesRequest request)
+        public async Task<IActionResult> SaveCangesDocument([FromForm] DocumentChangesRequest request)
         {
             var document = await _context.DocumentNotes
                 .Include(x => x.DocumentNoteTags)
@@ -78,13 +80,23 @@ namespace Artifact_Service_Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteDocument(Guid documnetId)
+        public async Task<IActionResult> DeleteDocument([FromQuery]Guid documnetId)
         {
-            var document = await _context.DocumentNotes.Where(x => x.Id.Equals(documnetId)).FirstOrDefaultAsync();
+            var pizda = await _context.DocumentNotes.ToListAsync();
+            var document = await _context.DocumentNotes.FirstOrDefaultAsync(x => x.Id == documnetId);
             if (document == null) return BadRequest();
             _context.DocumentNotes.Remove(document);
             await _context.SaveChangesAsync();
             return Ok();   
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeAccess([FromBody] IEnumerable<string> emails, Guid documentId)
+        {
+            var result = await _fileService.ChangeDocumentAccess(emails, documentId);
+            if(result.All(item => emails.Contains(item)) && emails.All(item => result.Contains(item)))
+                return Ok(result);
+            return Problem();
         }
 
 

@@ -3,6 +3,7 @@ using System;
 using Artifact_Service_Api.AppData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Artifact_Service_Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241110171716_add many to many to documentNoteAccess")]
+    partial class addmanytomanytodocumentNoteAccess
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,27 +169,6 @@ namespace Artifact_Service_Api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("NoteAccesses");
-                });
-
-            modelBuilder.Entity("Artifact_Service_Api.Models.NoteFile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("FileId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("NoteId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FileId");
-
-                    b.HasIndex("NoteId");
-
-                    b.ToTable("NoteFiles");
                 });
 
             modelBuilder.Entity("Artifact_Service_Api.Models.NoteTag", b =>
@@ -342,25 +324,6 @@ namespace Artifact_Service_Api.Migrations
                     b.Navigation("Note");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Artifact_Service_Api.Models.NoteFile", b =>
-                {
-                    b.HasOne("Artifact_Service_Api.Models.File", "File")
-                        .WithMany()
-                        .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Artifact_Service_Api.Models.Note", "Note")
-                        .WithMany()
-                        .HasForeignKey("NoteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("File");
-
-                    b.Navigation("Note");
                 });
 
             modelBuilder.Entity("Artifact_Service_Api.Models.NoteTag", b =>

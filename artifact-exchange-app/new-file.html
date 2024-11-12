@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="./styles/new-file.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+   <title>New File</title>
+</head>
+<body>
+
+   <!-- Окно создание заметки-файла -->
+   <div class="create__file hidden">
+      <div class="modal__overlay">
+         <section class="file__modal-inner">
+            <div class="close__file-btn">
+               <button class="close__file-creating">
+                  <img src="./images/close-file-creating.svg" alt="" class="close__file-creating__img">
+               </button>
+            </div>
+            <div class="file__wrapper">
+               <div class="file__title">
+                  <input class="input__file-title" type="text" placeholder="Заголовок" required>
+               </div>
+               <div class="file__text">
+                  <textarea class="input__file-text" placeholder="Описание (до 50 символов)"></textarea>
+               </div>
+            </div>
+            <div class="add__file">
+               <div class="add__file-inner">
+                  <img src="./images/add-file.svg" alt="" class="add__file-img">
+                  <input type="file" class="add__file-input">
+               </div>
+               <div class="file__link hidden">
+                  <a href="#" target="_blank" class="file__open-link"></a>
+                  <button type="button" class="file__delete-button">
+                     <img class="file__delete-img" src="./images/close-file.svg" alt="">
+                  </button>
+               </div>
+            </div>
+            <div class="tag-and-share">
+               <div class="add__tag">
+                  <img src="./images/add-tag.svg" alt="" class="add__tag-img">
+                  <input type="text" id="tag" name="tag" list="tag-options" placeholder="Добавить тег">
+                  <datalist id="tag-options">
+                     <option value="Тег1 ">
+                     <option value="Тег2">
+                     <option value="Тег3">
+                  </datalist>
+               </div>
+               <div class="file__share-btn">
+                  <button type="button" class="file__share-button">
+                     <img src="./images/share.svg" alt="" class="file__share-img">
+                     <p class="file__text-btn">Поделиться</p>
+                  </button>
+               </div>
+            </div>
+            <div class="file__action">
+               <button type="submit" class="file__action-create-btn__save isDisabled">
+                  Сохранить
+               </button>
+            </div>
+         </section>
+      </div>
+   </div>
+
+   <!-- Окно редактирование заметки-файла -->
+   <div class="edit__file hidden">
+      <div class="modal__overlay">
+         <section class="file__modal-inner">
+            <div class="close__file-btn">
+               <button class="close__file-editing">
+                  <img src="./images/close-file-creating.svg" alt="" class="close__file-creating__img">
+               </button>
+            </div>
+            <div class="file__wrapper">
+               <div class="file__title">
+                  <input class="input__edit-file__title" type="text" placeholder="Заголовок" required>
+               </div>
+               <div class="file__text">
+                  <textarea class="input__edit-file__text" placeholder="Описание (до 50 символов)"></textarea>
+               </div>
+            </div>
+            <div class="file__edit-share__btn">
+               <button type="button" class="file__share-button">
+                  <img src="./images/share.svg" alt="" class="file__share-img">
+                  <p class="file__text-btn">Поделиться</p>
+               </button>
+            </div>
+            <div class="file__edit-options">
+               <div class="add__tag">
+                  <img src="./images/add-tag.svg" alt="" class="add__tag-img">
+                  <input type="text" id="tag" name="tag" list="tag-options" placeholder="Добавить тег">
+                  <datalist id="tag-options">
+                     <option value="Тег1 ">
+                     <option value="Тег2">
+                     <option value="Тег3">
+                  </datalist>
+               </div>
+               <div class="file__action">
+                  <button type="button" class="file__action-edit-btn__delete">
+                     <img src="./images/delete.svg" alt="" class="note__img">
+                     Удалить
+                  </button>
+               </div>
+            </div>
+            <div class="file__action">
+               <button type="submit" class="file__action-edit-btn__save isDisabled">
+                  Сохранить
+               </button>
+            </div>
+         </section>
+      </div>
+   </div>
+
+   <!-- Подтверждение удаления заметки-файла -->
+   <div class="approve__open hidden">
+      <div class="modal__overlay">
+         <section class="approve__action">
+            <div class="approve__inner">
+               <h2 class="approve__title">Удалить файл?</h2>
+               <div class="approve__btn">
+                  <button type="button" class="approve__cancel">Отменить</button>
+                  <button type="button" class="approve__delete">Удалить</button>
+               </div>
+            </div>
+         </section>
+      </div>
+   </div>
+
+   <!-- Окно с предоставлением возможности поделиться заметкой -->
+   <div class="share__open hidden">
+      <div class="modal__overlay">
+         <section class="share__action">
+            <div class="share__inner">
+               <div class="share__header">
+                  <h2 class="share__title">Поделиться</h2>
+                  <div class="share__input">
+                     <input type="checkbox">
+                     <p class="share__status">Чтение для всех</p>
+                  </div>
+               </div>
+               <div class="share__user">
+                  <input class="input__email" type="email" placeholder="Введите email" required>
+                  <form class="share__choose-status">
+                     <select class="share__options" name="status">
+                       <option value="reading">Чтение</option>
+                       <option value="editing">Редактирование</option>
+                     </select>
+                  </form>
+               </div>
+               <h3 class="share__list-title">Пользователи с доступом</h3>
+               
+               <div class="users__with-access">
+                  <div class="user__with-access__inner">
+                     <div class="user__with-access">
+                        <img class="user__logo" src="" alt="">
+                        <p class="user__email"></p>
+                     </div>
+                     <div class="user__mode">
+                        <p class="user__mode-text"></p>
+                     </div>
+                  </div>
+               </div>
+               <div class="share__btn">
+                  <button type="reset" class="share__cancel">Отменить</button>
+                  <button type="button" class="share__save">Сохранить</button>
+               </div>
+            </div>
+         </section>
+      </div>
+   </div>
+
+   <script src="../src/js/main.js" type="module"></script>
+</body>
+</html>

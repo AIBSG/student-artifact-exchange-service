@@ -18,4 +18,17 @@ public class AppDbContext : DbContext
     public DbSet<DocumentNoteTag> DocumentNoteTags { get; set; }
     public DbSet<DocumentNoteAccess> DocumentNoteAccesses { get; set; }
     public DbSet<NoteFile> NoteFiles { get; set; }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<DocumentNote>()
+            .HasMany(dn => dn.DocumentNoteAccesses)
+            .WithOne(dna => dna.DocumentNote)
+            .HasForeignKey(dna => dna.DocumentNoteId);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.DocumentNoteAccesses)
+            .WithOne(dna => dna.User)
+            .HasForeignKey(dna => dna.UserId);
+    }
 }

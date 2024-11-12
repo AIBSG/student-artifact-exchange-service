@@ -56,10 +56,10 @@
          </div> 
          <div class="note__wrapper">
             <div class="note__title">
-                  <input class="input__title" type="text" placeholder="Заголовок" required>
+                  <input class="input__note-title" type="text" placeholder="Заголовок" required>
                </div>
                <div class="note__text">
-                  <textarea class="input__text" placeholder="Текст"></textarea>
+                  <textarea class="input__note-text" placeholder="Текст"></textarea>
             </div>
          </div>
          
@@ -90,7 +90,7 @@
                      
             <div class="note__actions">
                <div class="note__action">
-                  <button type="button" class="note__action-btn">
+                  <button type="button" class="note__action-btn save isDisabled">
                      <img src="./images/save.svg" alt="" class="note__img">
                      <p class="note__text-btn__save">Сохранить</p>
                   </button>
@@ -146,13 +146,14 @@
                <h3 class="share__list-title">Пользователи с доступом</h3>
                
                <div class="users__with-access">
-                  <div class="user__with-access">
-                     <img class="user__logo" src="./images/user.svg" alt="">
-                     <p class="user__email">Почта пользователя</p>
-                  </div>
-                  <div class="user__with-access">
-                     <img class="user__logo" src="./images/user.svg" alt="">
-                     <p class="user__email">Почта пользователя</p>
+                  <div class="user__with-access__inner">
+                     <div class="user__with-access">
+                        <img class="user__logo" src="" alt="">
+                        <p class="user__email"></p>
+                     </div>
+                     <div class="user__mode">
+                        <p class="user__mode-text"></p>
+                     </div>
                   </div>
                </div>
                <div class="share__btn">
