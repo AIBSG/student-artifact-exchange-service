@@ -17,7 +17,7 @@ public class AppDbContext : DbContext
     public DbSet<DocumentNote> DocumentNotes { get; set; }
     public DbSet<DocumentNoteTag> DocumentNoteTags { get; set; }
     public DbSet<DocumentNoteAccess> DocumentNoteAccesses { get; set; }
-    //public DbSet<NoteFile> NoteFiles { get; set; }
+    public DbSet<NoteFile> NoteFiles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
