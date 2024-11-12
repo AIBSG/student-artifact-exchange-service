@@ -113,29 +113,35 @@ namespace Artifact_Service_Api.Service
 
         public async Task<IEnumerable<string>?> ChangeDocumentAccess(IEnumerable<string> emails, Guid documentId)
         {
-            var currentAccesses = await _context.DocumentNoteAccesses.Where(x => x.DocumentNoteId.Equals(documentId)).ToListAsync();
+            var currentAccesses = await _context.DocumentNoteAccesses.Include(x => x.User).Where(x => x.DocumentNoteId.Equals(documentId)).ToListAsync();
             var currentUsers = currentAccesses.Select(x => x.User);
             var usersRequest = await _context.Users.Where(x => emails.Contains(x.Email)).ToListAsync();
             var document = await _context.DocumentNotes.SingleAsync(x => x.Id.Equals(documentId));
-
-            var acceassesToKill = currentAccesses.Where(x => emails.Contains(x.User.Email));
-            var usersToAdd = usersRequest.Where(x => !currentUsers.Contains(x)).ToList();
-            var entitiesToAdd = new List<DocumentNoteAccess>();
-
-            foreach (var user in usersToAdd)
+            if(currentAccesses != null)
             {
-                entitiesToAdd.Add(new DocumentNoteAccess()
-                {
-                    Id = Guid.NewGuid(),
-                    UserId = user.Id,
-                    DocumentNoteId = documentId,
-                    DocumentNote = document,
-                    User = user
-                });
+                var acceassesToKill = currentAccesses.Where(x => !emails.Contains(x.User.Email)).ToArray();
+                if(acceassesToKill != null) _context.DocumentNoteAccesses.RemoveRange(acceassesToKill);
             }
+           
+            var usersToAdd = usersRequest.Where(x => !currentUsers.Contains(x)).ToList();
+            if(usersToAdd != null)
+            {
+                var entitiesToAdd = new List<DocumentNoteAccess>();
 
-            await _context.DocumentNoteAccesses.AddRangeAsync(entitiesToAdd);
-            _context.DocumentNoteAccesses.RemoveRange(acceassesToKill);
+                foreach (var user in usersToAdd)
+                {
+                    entitiesToAdd.Add(new DocumentNoteAccess()
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = user.Id,
+                        DocumentNoteId = documentId,
+                        DocumentNote = document,
+                        User = user
+                    });
+                }
+
+                await _context.DocumentNoteAccesses.AddRangeAsync(entitiesToAdd);
+            }
             await _context.SaveChangesAsync();
             return await _context.DocumentNoteAccesses.Where(x=>x.DocumentNoteId.Equals(documentId)).Select(x=>x.User.Email).ToListAsync();
         }
