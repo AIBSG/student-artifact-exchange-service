@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Artifact_Service_Api.Models;
 
@@ -16,7 +17,9 @@ public class User : BaseEntity
     public int? RegistryCode { get; set; }
 
     public bool GAcoount { get; set; }
+    [JsonIgnore]
     public virtual List<DocumentNoteAccess> DocumentNoteAccesses { get; set; }
+    [JsonIgnore]
     public virtual List<NoteAccess> NoteAccess { get; set; }
 
 }

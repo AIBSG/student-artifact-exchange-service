@@ -1,6 +1,7 @@
 ﻿using Artifact_Service_Api.AppData;
 using Artifact_Service_Api.Dtos;
 using Artifact_Service_Api.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using NpgsqlTypes;
@@ -21,13 +22,18 @@ namespace Artifact_Service_Api.Service
             .Include(x => x.File)
             .Include(x => x.Author)
             .Include(x => x.DocumentNoteAccesses)
+            .ThenInclude(x => x.User)
             .Include(x => x.DocumentNoteTags)
             .ThenInclude(x => x.Tag)
             .Where(x => x.Author.Id.Equals(userId))
             .ToArrayAsync();
 
         private async Task<IEnumerable<DocumentNote>?> GetAvailableDocuments(Guid userId) =>
-            await _context.DocumentNotes.Include(x => x.DocumentNoteAccesses).Where(x => x.DocumentNoteAccesses.Select(x => x.UserId).Contains(userId)).ToArrayAsync();
+            await _context.DocumentNotes
+            .Include(x => x.DocumentNoteAccesses)
+            .ThenInclude(x => x.User)
+            .Where(x => x.DocumentNoteAccesses.Select(x => x.UserId).Contains(userId))
+            .ToArrayAsync();
 
         public async Task<IEnumerable<Models.File?>> GetFilesByNote(Guid noteId) =>
             await _context.Notes
@@ -62,7 +68,7 @@ namespace Artifact_Service_Api.Service
             result.Author = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.AuthorId);
             result.Title = request.Title;
             result.Description = request.Description;
-            result.DocumentNoteAccesses = null;
+            result.DocumentNoteAccesses = new List<DocumentNoteAccess>();
             result.IsOpen = request.IsOpen;
             result.DocumentNoteTags = new List<DocumentNoteTag>();
             var currentTags =  await _context.Tags.Where(x => request.TagsNames.Contains(x.Name)).ToListAsync();
@@ -76,28 +82,68 @@ namespace Artifact_Service_Api.Service
                     TagId = tag.Id });
             }
 
-            var resAccess = new List<DocumentNoteAccess>();
             var usersToAccess = await _context.Users.Where(x => request.MailsToAccess.Contains(x.Email)).ToArrayAsync();
 
             foreach (var user in usersToAccess)
             {
-                resAccess.Add(new DocumentNoteAccess()
+                result.DocumentNoteAccesses.Add(new DocumentNoteAccess()
                 {
                     DocumentNoteId = result.Id,
                     UserId = user.Id,
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
+                    User = user,
+                    DocumentNote = result
                 });
             }
+
+            
 
             result.File = new Models.File() { 
                 Id = Guid.NewGuid(),
                 CustomFileName = request.File.FileName,
                 ServerFileName = serverFileName };
 
+
+            await _context.DocumentNoteAccesses.AddRangeAsync(result.DocumentNoteAccesses);
             await _context.Set<DocumentNote>().AddAsync(result);
             await _context.SaveChangesAsync();
 
             return result;
+        }
+
+        public async Task<IEnumerable<string>?> ChangeDocumentAccess(IEnumerable<string> emails, Guid documentId)
+        {
+            var currentAccesses = await _context.DocumentNoteAccesses.Include(x => x.User).Where(x => x.DocumentNoteId.Equals(documentId)).ToListAsync();
+            var currentUsers = currentAccesses.Select(x => x.User);
+            var usersRequest = await _context.Users.Where(x => emails.Contains(x.Email)).ToListAsync();
+            var document = await _context.DocumentNotes.SingleAsync(x => x.Id.Equals(documentId));
+            if(currentAccesses != null)
+            {
+                var acceassesToKill = currentAccesses.Where(x => !emails.Contains(x.User.Email)).ToArray();
+                if(acceassesToKill != null) _context.DocumentNoteAccesses.RemoveRange(acceassesToKill);
+            }
+           
+            var usersToAdd = usersRequest.Where(x => !currentUsers.Contains(x)).ToList();
+            if(usersToAdd != null)
+            {
+                var entitiesToAdd = new List<DocumentNoteAccess>();
+
+                foreach (var user in usersToAdd)
+                {
+                    entitiesToAdd.Add(new DocumentNoteAccess()
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = user.Id,
+                        DocumentNoteId = documentId,
+                        DocumentNote = document,
+                        User = user
+                    });
+                }
+
+                await _context.DocumentNoteAccesses.AddRangeAsync(entitiesToAdd);
+            }
+            await _context.SaveChangesAsync();
+            return await _context.DocumentNoteAccesses.Where(x=>x.DocumentNoteId.Equals(documentId)).Select(x=>x.User.Email).ToListAsync();
         }
     }
 }
