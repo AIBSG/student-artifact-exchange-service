@@ -18,6 +18,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection1"))); // Здесь я указал свою строку подключения
 
 var app = builder.Build();
+void ConfigureServices(IServiceCollection services)
+{
+    services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAll",
+          builder =>
+          {
+              builder.AllowAnyOrigin();
+
+              builder.AllowAnyHeader();
+
+              builder.AllowAnyMethod();
+          });
+    });
+}
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 if (true) //app.Environment.IsDevelopment()
