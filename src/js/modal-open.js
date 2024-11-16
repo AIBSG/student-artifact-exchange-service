@@ -1,4 +1,4 @@
-import { MAIL_REGEX } from "./const.js";
+import { MAIL_REGEX, USER_STATUS } from "./const.js";
 
 const shareButton = document.querySelector('.note__share-button');
 const shareOpen = document.querySelector('.share__open');
@@ -9,7 +9,6 @@ const cancelDeleteButton = document.querySelector('.approve__cancel');
 const inputEmail = document.querySelector('.input__email');
 const shareOptions = document.querySelector('.share__options');
 const saveShareButton = document.querySelector('.share__save');
-const readForAllCheckbox = document.querySelector('.share__input input[type="checkbox"]');
 
 //Открытие и закрытие окна с возможностью поделиться заметкой
 if (shareButton) {
@@ -33,6 +32,7 @@ function saveShareModal() {
       alert('Введите email');
       return;
    }
+   
    if (!MAIL_REGEX.test(emailShareInput)) {
       alert('Введите корректный email');
       return;
@@ -47,7 +47,7 @@ function saveShareModal() {
       // Если такой email уже существует, обновляем режим доступа
       const userModeText = existingUser.closest('.user__with-access__inner')
          .querySelector('.user__mode-text');
-      userModeText.textContent = accessMode === 'reading' ? 'Чтение' : 'Редактирование';
+      userModeText.textContent = accessMode === 'reading' ? USER_STATUS.READING : USER_STATUS.EDITING;
 
       // Сообщение об успешном обновлении режима доступа
       alert(`Режим доступа для ${emailShareInput} был обновлен.`);
@@ -89,24 +89,6 @@ function saveShareModal() {
       inputEmail.value = '';
    }
 };
-
-
-readForAllCheckbox.addEventListener('change', () => {
-   const isChecked = readForAllCheckbox.checked;
-
-   // Если переключатель включен, изменяем режим всех пользователей на "Чтение"
-   if (isChecked) {
-       // Находим все элементы с режимом доступа
-       const userModeTexts = document.querySelectorAll('.user__mode-text');
-       
-       userModeTexts.forEach(modeText => {
-           modeText.textContent = 'Чтение';
-       });
-
-       alert('Режим доступа для всех пользователей был изменен на "Чтение".');
-   }
-});
-
 
 //Окрытие и закрытие окна с подтверждением удаления заметки
 if (deleteNoteButton) {
