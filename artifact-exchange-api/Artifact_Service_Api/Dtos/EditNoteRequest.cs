@@ -10,6 +10,4 @@ public class EditNoteRequest
     public bool IsOpen { get; set; }
     public IEnumerable<string>? TagsNames { get; set; }
     public List<IFormFile>? Files { get; set; }
-    public IEnumerable<string>? Emails { get; set; }
-    public IEnumerable<bool>? CanEdit { get; set; }
 }
