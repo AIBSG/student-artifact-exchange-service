@@ -12,6 +12,30 @@ const saveCreateFileButton = document.querySelector('.file__action-create-btn__s
 const createFileDeleteButton = document.querySelector('.file__delete-button');
 const shareButton = createFileModal.querySelector('.file__share-button');
 const cancelButton = document.querySelector('.share__cancel');
+const fileTagInput = document.querySelector('#tag');
+
+
+// Функция для сохранения данных в localStorage
+function saveFileData() {
+   const fileData = {
+       title: fileTitleInput.value,
+       text: fileTextInput.value,
+       tag: fileTagInput.value 
+   };
+   localStorage.setItem('fileData', JSON.stringify(fileData));
+}
+
+// Функция для загрузки данных из localStorage
+function loadFileData() {
+  const savedFileData = localStorage.getItem('fileData');
+  if (savedFileData) {
+     const data = JSON.parse(savedFileData);
+     fileTitleInput.value = data.title;
+     fileTextInput.value = data.text;
+     fileTagInput.value = data.tag;
+  }
+  toggleSaveButton(); 
+}
 
 //Ограничение количества символов в заголовке и в описании
 if (fileTitleInput) {
@@ -19,6 +43,7 @@ if (fileTitleInput) {
       if (fileTitleInput.value.length > MAX_FILE_TITLE_LENGTH) {
          fileTitleInput.value = fileTitleInput.value.slice(0, MAX_FILE_TITLE_LENGTH);
       }
+      saveFileData()
    });
 }
 
@@ -27,6 +52,13 @@ if (fileTextInput) {
       if (fileTextInput.value.length > MAX_FILE_TEXT_LENGTH) {
          fileTextInput.value = fileTextInput.value.slice(0, MAX_FILE_TEXT_LENGTH);
       }
+      saveFileData()
+   });
+}
+
+if (fileTagInput) {
+   fileTagInput.addEventListener('input', () => {
+       saveFileData(); // Сохраняем данные после изменения текста
    });
 }
 
@@ -55,7 +87,7 @@ createFileInput.addEventListener('change', () => {
 //Если заголовок, текст и поле файла заметки-файла пусты, кнопка сохранить недоступна
 function toggleSaveButton() {
    if (fileTitleInput && fileTextInput && createFileInput) {
-      if (fileTitleInput.value.length > 0 && fileTextInput.value.length > 0 && createFileInput.files.length > 0) {
+      if (fileTitleInput.value.length > 0 && fileTextInput.value.length > 0 && createFileInput.files.length > 0 && fileTagInput.value.length > 0) {
          saveCreateFileButton.classList.remove('isDisabled');
       } else {
          saveCreateFileButton.classList.add('isDisabled');
@@ -65,10 +97,11 @@ function toggleSaveButton() {
 
 toggleSaveButton();
 
-if (fileTitleInput && fileTextInput && createFileInput) {
+if (fileTitleInput && fileTextInput && createFileInput && fileTagInput) {
    fileTitleInput.addEventListener('input', toggleSaveButton);
    fileTextInput.addEventListener('input', toggleSaveButton);
    createFileInput.addEventListener('change', toggleSaveButton);
+   fileTagInput.addEventListener('change', toggleSaveButton);
 }
 
 if (createFileDeleteButton) {
@@ -90,3 +123,5 @@ if (shareButton) {
 if (cancelButton) {
    cancelButton.addEventListener('click', closeShareModal)
 }
+
+loadFileData();
