@@ -8,6 +8,7 @@ using Artifact_Service_Api.Models;
 using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Cors;
 
 namespace Artifact_Service_Api.Controllers
 {
@@ -29,19 +30,20 @@ namespace Artifact_Service_Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllOpenDocuments() =>
          Ok(await _fileService.GetAllOpenDocuments());
-        
-            
+
 
         [HttpGet]
         public async Task<IActionResult> GetUserDocuments([FromQuery] Guid userId) =>
             Ok(_fileService.GetAllUserDocuments(userId));
 
         [HttpGet]
-        public async Task<IActionResult> GetDocumentFile([FromQuery] Models.File file) =>
-         File(_fileStorageService.GetFileBites(file).Result, 
-             MimeTypes.GetMimeType(file.ServerFileName), 
-             file.CustomFileName);
-
+        public async Task<IActionResult> GetDocumentFile([FromQuery] string serverFileName)
+        {
+            var file = await _context.Files.Where(x => x.ServerFileName == serverFileName).FirstOrDefaultAsync();
+            return File(_fileStorageService.GetFileBites(serverFileName).Result,
+                MimeTypes.GetMimeType(serverFileName),
+                file.CustomFileName);
+        }
         [HttpPost]
         public async Task<IActionResult> SaveNewDocument ([FromForm] NewDocumentRequest request)
         {

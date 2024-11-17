@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Artifact_Service_Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c85d040834da7ee244cf3deccb6157dc30e10eb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+053049283ea344353fc54337ce202c146b257fd1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Artifact_Service_Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Artifact_Service_Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
