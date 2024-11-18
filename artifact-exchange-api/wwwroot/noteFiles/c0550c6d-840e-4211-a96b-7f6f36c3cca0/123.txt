@@ -1,0 +1,212 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+using System.Text.RegularExpressions;
+
+namespace Lab_work1
+{
+    public partial class FormMain : Form
+    {
+        public FormMain()
+        {
+            InitializeComponent();
+        }
+
+        private void îòêðûòüToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = openFileDialog1.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                using (var sr = new StreamReader(openFileDialog1.FileName, Encoding.Default))
+                {
+                    richTextBox1.Text = sr.ReadToEnd();
+                }
+            }
+        }
+
+        private void ñîõðàíèòüToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = saveFileDialog1.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                using (var sw = new StreamWriter(saveFileDialog1.FileName, true, Encoding.Default))
+                {
+                    for (int i = 0; i < listBox3.Items.Count; i++)
+                    {
+                        sw.WriteLine((string)listBox3.Items[i]);
+                    }
+                }
+            }
+        }
+
+        private void âûõîäToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = MessageBox.Show("Âû óâåðåíû, ÷òî õîòèòå âûéòè èç ïðîãðàììû?", "Âûõîä èç ïðîãðàììû",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            listBox2.Items.Clear();
+            listBox3.Items.Clear();
+
+            listBox2.BeginUpdate();
+
+            string[] Strings = richTextBox1.Text.Split(new char[] { '\n', '\t', ' ' },
+                StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string s in Strings)
+            {
+                string Str = s.Trim();
+
+                if (Str == String.Empty) continue;
+                if (radioButton1.Checked) listBox2.Items.Add(Str);
+                if (radioButton2.Checked)
+                {
+                    if (Regex.IsMatch(Str, @"\d")) listBox2.Items.Add(Str);
+                }
+                if (radioButton3.Checked)
+                {
+                    if (Regex.IsMatch(Str, @"\w+@\w+\.\w+")) listBox2.Items.Add(Str);
+                }
+            }
+
+            listBox2.EndUpdate();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            listBox2.Items.Clear();
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            listBox3.Items.Clear();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+            listBox2.Items.Clear();
+            listBox3.Items.Clear();
+
+            richTextBox1.Clear();
+
+            textBox1.Clear();
+
+            radioButton1.Checked = true;
+            checkBox1.Checked = true;
+            checkBox2.Checked = false;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+
+            string Find = textBox1.Text;
+
+            if (checkBox1.Checked)
+            {
+                foreach (string String in listBox1.Items)
+                {
+                    if (String.Contains(Find)) listBox1.Items.Add(String);
+                }
+            }
+
+            if (checkBox2.Checked)
+            {
+                foreach (string String in listBox1.Items)
+                {
+                    if (String.Contains(Find)) listBox1.Items.Add(String);
+                }
+            }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            AddRecForm AddRec = new AddRecForm();
+
+            AddRec.Owner = this;
+            AddRec.ShowDialog();
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            for (int i = listBox2.Items.Count - 1; i >= 0; i--)
+            {
+                if (listBox2.GetSelected(i)) listBox2.Items.RemoveAt(i);
+            }
+
+            for (int i = listBox3.Items.Count - 1; i >= 0; i--)
+            {
+                if (listBox3.GetSelected(i)) listBox3.Items.RemoveAt(i);
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            listBox3.BeginUpdate();
+
+            foreach (object Item in listBox2.SelectedItems)
+            {
+                listBox3.Items.Add(Item);
+            }
+
+            listBox3.EndUpdate();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            listBox3.Items.AddRange(listBox2.Items);
+            listBox2.Items.Clear();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            listBox2.BeginUpdate();
+
+            foreach (object Item in listBox3.SelectedItems)
+            {
+                listBox2.Items.Add(Item);
+            }
+
+            listBox2.EndUpdate();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            listBox2.Items.AddRange(listBox3.Items);
+            listBox3.Items.Clear();
+        }
+    }
+}
