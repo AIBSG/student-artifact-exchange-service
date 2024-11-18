@@ -133,7 +133,7 @@ public class NoteController(AppDbContext context) : ControllerBase
     }
 
     [HttpPatch]
-    public async Task<IActionResult> EditNote(Guid id, [FromForm]EditNoteRequest request)
+    public async Task<IActionResult> EditNote(Guid id, EditNoteRequest request)
     {
         var note = await _context.Notes
             .Include(n => n.NoteTags)
@@ -189,11 +189,6 @@ public class NoteController(AppDbContext context) : ControllerBase
             .Include(n => n.Files)
             .FirstOrDefaultAsync(n => n.Id == id);
         if (note == null) return NotFound();
-
-        foreach (var file in note.Files)
-        {
-            note.Files.Remove(file);
-        }
 
         var path = $"../wwwroot/noteFiles/{id}";
         var dirInfo = new DirectoryInfo(path);
