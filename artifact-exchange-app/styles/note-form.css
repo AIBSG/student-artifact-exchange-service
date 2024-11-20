@@ -246,6 +246,22 @@ a {
     font-size: 16px;              
 }
 
+.allcheck-my-notes__btn{
+   background: none;          
+    border: none;               
+    color: #553BF1;                
+    cursor: pointer;            
+    font-size: 16px;              
+}
+
+.allcheck-my-files__btn{
+   background: none;          
+    border: none;               
+    color: #553BF1;                
+    cursor: pointer;            
+    font-size: 16px;              
+}
+
 h1{
    margin-left: 60px;
    padding: 0;
