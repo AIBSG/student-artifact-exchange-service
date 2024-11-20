@@ -11,30 +11,35 @@ namespace Artifact_Service_Api.Controllers;
 public class NoteController(AppDbContext context) : ControllerBase
 {
     private readonly AppDbContext _context = context;
-    private readonly EditNoteRequest _request;
     
-
     [HttpGet]
     public async Task<IEnumerable<Note>> GetOpenNotes() =>
         await _context.Notes
             .Where(n => n.IsOpen)
             .Include(n => n.NoteTags)
+            .ThenInclude(n => n.Tag)
             .Include(n => n.NoteAccess)
+            .ThenInclude(n => n.User)
             .Include(n => n.Author)
             .ToListAsync();
 
     [HttpGet]
-    public async Task<IActionResult> GetNote(Guid id)
+    public async Task<IActionResult> GetNote(Guid id, Guid userId)
     {
         var note = await _context.Notes
             .Where(n => n.Id.Equals(id))
             .Include(n => n.NoteAccess)
+            .ThenInclude(n => n.User)
             .Include(n => n.NoteTags)
+            .ThenInclude(n => n.Tag)
             .Include(n => n.Author)
             .Include(n => n.Files)
-            .Select(n => n.Files)
             .FirstOrDefaultAsync();
         if (note == null) return NotFound();
+
+        var user = note.NoteAccess.FirstOrDefault(u => u.UserId.Equals(userId));
+        if (user == null && !note.IsOpen) return BadRequest();
+
         return Ok(note);
     }
 
@@ -43,7 +48,9 @@ public class NoteController(AppDbContext context) : ControllerBase
         await _context.Notes
             .Where(n => n.Author.Id == userId && n.IsOpen)
             .Include(n => n.NoteAccess)
+            .ThenInclude(n => n.User)
             .Include(n => n.NoteTags)
+            .ThenInclude(n => n.Tag)
             .ToListAsync();
 
     [HttpGet]
@@ -51,13 +58,21 @@ public class NoteController(AppDbContext context) : ControllerBase
         await _context.Notes
             .Where(n => n.Author.Id == userId)
             .Include(n => n.NoteAccess)
+            .ThenInclude(n => n.User)
             .Include(n => n.NoteTags)
+            .ThenInclude(n => n.Tag)
             .ToListAsync();
 
     [HttpPost]
-    public async Task<IActionResult> CreateNote(SaveNoteRequest request, string serverFileName)
+    public async Task<IActionResult> CreateNote(SaveNoteRequest request)
     {
+        Guid id = Guid.NewGuid();
+        var newPath = $"../wwwroot/noteFiles/{id}";
+        var dirInfo = new DirectoryInfo(newPath);
+        if (!dirInfo.Exists) dirInfo.Create();
+
         var note = new Note();
+        note.Id = id;
         note.Author = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.AuthorId);
         note.Title = request.Title;
         note.Description = request.Description;
@@ -71,7 +86,6 @@ public class NoteController(AppDbContext context) : ControllerBase
             {
                 Note = note,
                 NoteId = note.Id,
-                Id = Guid.NewGuid(),
                 Tag = tag,
                 TagId = tag.Id
             });
@@ -79,17 +93,17 @@ public class NoteController(AppDbContext context) : ControllerBase
         note.Files = [];
         foreach (var file in request.Files)
         {
+            var path = $"../wwwroot/noteFiles/{note.Id}/{file.FileName}";
+            using (var fs = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(fs);
+            }
+
             note.Files.Add(new Models.File {
                 Id = Guid.NewGuid(),
-                CustomFileName = file.FileName,
-                ServerFileName = serverFileName
+                CustomFileName = file.FileName
             });
         }
-        note.NoteAccess.Add(new NoteAccess {
-            UserId = note.Author.Id,
-            NoteId = note.Id,
-            CanEdit = true
-        });
 
         await _context.Notes.AddAsync(note);
         await _context.SaveChangesAsync();
@@ -97,101 +111,88 @@ public class NoteController(AppDbContext context) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetNoteRequest(Guid id, Guid userId)
+    public async Task<IActionResult> GetEditNote(Guid noteId, Guid userId)
     {
-        var note = await _context.Notes.FindAsync(id);
+        var note = await _context.Notes
+            .Include(n => n.Author)
+            .Include(n => n.Files)
+            .Include(n => n.NoteAccess)
+            .ThenInclude(n => n.User)
+            .Include(n => n.NoteTags)
+            .ThenInclude(n => n.Tag)
+            .FirstOrDefaultAsync(n => n.Id == noteId);
+        var userAccess = await _context.NoteAccesses.Where(n => n.NoteId == noteId && n.UserId == userId).FirstOrDefaultAsync();
+
         if (note == null) return NotFound();
+        if (userAccess != null)
+            if (!userAccess.CanEdit) return BadRequest();
+        else
+            if (userId != note.Author.Id) return BadRequest();
 
-        var userAccess = await _context.NoteAccesses.Where(n => n.NoteId == id && n.UserId == userId).FirstOrDefaultAsync();
-        if (!userAccess.CanEdit) return Forbid();
-        
-        _request.NoteId = note.Id;
-        _request.Title = note.Title;
-        _request.Description = note.Description;
-        _request.Text = note.Text;
-        _request.IsOpen = note.IsOpen;
-        _request.TagsNames = await _context.NoteTags.Where(nt => nt.NoteId == id).Select(nt => nt.Tag.Name).ToListAsync();
-        _request.FilesNames = note.Files.Select(f => f.CustomFileName);
-        _request.Emails = await _context.NoteAccesses.Where(na => na.NoteId == id).Select(na => na.User.Email).ToListAsync();
-
-        return Ok(_request);
+        return Ok(note);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> EditNote(EditNoteRequest request, string serverFileName)
+    [HttpPatch]
+    public async Task<IActionResult> EditNote(Guid id, EditNoteRequest request)
     {
-        request = _request;
-        var note = await _context.Notes.FindAsync(request.NoteId);
-        
+        var note = await _context.Notes
+            .Include(n => n.NoteTags)
+            .ThenInclude(n => n.Tag)
+            .Include(n => n.Files)
+            .FirstOrDefaultAsync(n => n.Id == id);
+        if (note == null) return NotFound();
+
         note.Title = request.Title;
         note.Description = request.Description;
         note.Text = request.Text;
         note.IsOpen = request.IsOpen;
-        var newTags = await _context.Tags.Where(t => request.TagsNames.Contains(t.Name)).ToListAsync();
-        foreach (var tag in newTags)
+        var currentTags = await _context.Tags.Where(t => request.TagsNames.Contains(t.Name)).ToListAsync();
+        foreach (var tag in currentTags)
         {
-            if (!note.NoteTags.Any(nt => nt.TagId == tag.Id))
+            if (note.NoteTags.Any(t => t.Tag == tag)) continue;
+
+            note.NoteTags.Add(new NoteTag
             {
-                var noteTag = await _context.NoteTags.FindAsync(tag.Id);
-                if (noteTag == null)
-                {
-                    note.NoteTags.Add(new NoteTag{
-                        NoteId = note.Id,
-                        TagId = tag.Id 
-                    });
-                    continue;
-                }
-                note.NoteTags.Remove(noteTag);
-            }
+                Note = note,
+                NoteId = note.Id,
+                Tag = tag,
+                TagId = tag.Id
+            });
         }
-        foreach (var fileName in request.FilesNames)
+        foreach (var file in request.Files)
         {
-            if (!note.Files.Any(f => f.CustomFileName == fileName))
+            if (note.Files.Any(f => f.CustomFileName == file.FileName)) continue;
+
+            var path = $"../wwwroot/noteFiles/{note.Id}/{file.FileName}";
+            using (var fs = new FileStream(path, FileMode.Create))
             {
-                var file = await _context.Files.FindAsync(fileName, note.Id);
-                if (file != null) note.Files.Remove(file);
+                await file.CopyToAsync(fs);
             }
-        }
-        if (request.Files != null)
-        {
-            foreach (var file in request.Files)
-            {
-                note.Files.Add(new Models.File {
-                    Id = Guid.NewGuid(),
-                    CustomFileName = file.FileName,
-                    ServerFileName = serverFileName
-                });
-            }
+
+            note.Files.Add(new Models.File {
+                Id = Guid.NewGuid(),
+                CustomFileName = file.FileName 
+            });
         }
 
         _context.Notes.Update(note);
         await _context.SaveChangesAsync();
-
         return Ok();
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> GiveAccess(string email, bool canEdit, Guid noteId)
-    {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        if (user == null) return NotFound();
-        
-        var noteAccess = new NoteAccess {
-            UserId = user.Id,
-            NoteId = noteId,
-            CanEdit = canEdit
-        };
-
-        await _context.NoteAccesses.AddAsync(noteAccess);
-        await _context.SaveChangesAsync();
-        return Ok(); 
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteNote(Guid id)
     {
-        var note = await _context.Notes.FindAsync(id);
+        var note = await _context.Notes
+            .Include(n => n.NoteTags)
+            .Include(n => n.NoteAccess)
+            .Include(n => n.Files)
+            .FirstOrDefaultAsync(n => n.Id == id);
         if (note == null) return NotFound();
+
+        var path = $"../wwwroot/noteFiles/{id}";
+        var dirInfo = new DirectoryInfo(path);
+        if (dirInfo.Exists) dirInfo.Delete(true);
 
         _context.Notes.Remove(note);
         await _context.SaveChangesAsync();
