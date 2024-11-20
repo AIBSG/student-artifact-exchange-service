@@ -6,11 +6,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Artifact_Service_Api.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class initcloud : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -19,7 +31,7 @@ namespace Artifact_Service_Api.Migrations
                     Email = table.Column<string>(type: "text", nullable: true),
                     Password = table.Column<string>(type: "text", nullable: true),
                     ActivatedEmail = table.Column<bool>(type: "boolean", nullable: false),
-                    RegistryCode = table.Column<int>(type: "integer", nullable: false),
+                    RegistryCode = table.Column<int>(type: "integer", nullable: true),
                     GAcoount = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -35,7 +47,8 @@ namespace Artifact_Service_Api.Migrations
                     AuthorId = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    Text = table.Column<string>(type: "text", nullable: true)
+                    Text = table.Column<string>(type: "text", nullable: true),
+                    IsOpen = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +68,6 @@ namespace Artifact_Service_Api.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CustomFileName = table.Column<string>(type: "text", nullable: true),
                     ServerFileName = table.Column<string>(type: "text", nullable: true),
-                    FilePath = table.Column<string>(type: "text", nullable: true),
                     NoteId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -95,12 +107,39 @@ namespace Artifact_Service_Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "NoteTags",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    NoteId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TagId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NoteTags", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NoteTags_Notes_NoteId",
+                        column: x => x.NoteId,
+                        principalTable: "Notes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NoteTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DocumentNotes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
+                    IsOpen = table.Column<bool>(type: "boolean", nullable: false),
                     FileId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -110,6 +149,37 @@ namespace Artifact_Service_Api.Migrations
                         name: "FK_DocumentNotes_Files_FileId",
                         column: x => x.FileId,
                         principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DocumentNotes_Users_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NoteFiles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    NoteId = table.Column<Guid>(type: "uuid", nullable: false),
+                    FileId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NoteFiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NoteFiles_Files_FileId",
+                        column: x => x.FileId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NoteFiles_Notes_NoteId",
+                        column: x => x.NoteId,
+                        principalTable: "Notes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -140,27 +210,28 @@ namespace Artifact_Service_Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tags",
+                name: "DocumentNoteTags",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    DocumentNoteId = table.Column<Guid>(type: "uuid", nullable: true),
-                    NoteId = table.Column<Guid>(type: "uuid", nullable: true)
+                    DocumentNoteId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TagId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.PrimaryKey("PK_DocumentNoteTags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tags_DocumentNotes_DocumentNoteId",
+                        name: "FK_DocumentNoteTags_DocumentNotes_DocumentNoteId",
                         column: x => x.DocumentNoteId,
                         principalTable: "DocumentNotes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tags_Notes_NoteId",
-                        column: x => x.NoteId,
-                        principalTable: "Notes",
-                        principalColumn: "Id");
+                        name: "FK_DocumentNoteTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -174,9 +245,24 @@ namespace Artifact_Service_Api.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DocumentNotes_AuthorId",
+                table: "DocumentNotes",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DocumentNotes_FileId",
                 table: "DocumentNotes",
                 column: "FileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentNoteTags_DocumentNoteId",
+                table: "DocumentNoteTags",
+                column: "DocumentNoteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentNoteTags_TagId",
+                table: "DocumentNoteTags",
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Files_NoteId",
@@ -194,19 +280,29 @@ namespace Artifact_Service_Api.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NoteFiles_FileId",
+                table: "NoteFiles",
+                column: "FileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NoteFiles_NoteId",
+                table: "NoteFiles",
+                column: "NoteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notes_AuthorId",
                 table: "Notes",
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tags_DocumentNoteId",
-                table: "Tags",
-                column: "DocumentNoteId");
+                name: "IX_NoteTags_NoteId",
+                table: "NoteTags",
+                column: "NoteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tags_NoteId",
-                table: "Tags",
-                column: "NoteId");
+                name: "IX_NoteTags_TagId",
+                table: "NoteTags",
+                column: "TagId");
         }
 
         /// <inheritdoc />
@@ -216,13 +312,22 @@ namespace Artifact_Service_Api.Migrations
                 name: "DocumentNoteAccesses");
 
             migrationBuilder.DropTable(
+                name: "DocumentNoteTags");
+
+            migrationBuilder.DropTable(
                 name: "NoteAccesses");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "NoteFiles");
+
+            migrationBuilder.DropTable(
+                name: "NoteTags");
 
             migrationBuilder.DropTable(
                 name: "DocumentNotes");
+
+            migrationBuilder.DropTable(
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Files");
