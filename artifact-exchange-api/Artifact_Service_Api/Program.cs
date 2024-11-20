@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -17,7 +15,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IFileStorageService, FileStorageSercvice>();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Test",
@@ -28,6 +25,7 @@ builder.Services.AddCors(options =>
                                                   .AllowAnyMethod();
                           });
 });
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))); // Здесь я указал свою строку подключения
 
@@ -41,5 +39,4 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("Test");
 app.MapControllers();
-
 app.Run();

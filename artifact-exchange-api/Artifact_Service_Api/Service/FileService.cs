@@ -30,8 +30,12 @@ namespace Artifact_Service_Api.Service
 
         private async Task<IEnumerable<DocumentNote>?> GetAvailableDocuments(Guid userId) =>
             await _context.DocumentNotes
+            .Include(x => x.File)
+            .Include(x => x.Author)
             .Include(x => x.DocumentNoteAccesses)
             .ThenInclude(x => x.User)
+            .Include(x => x.DocumentNoteTags)
+            .ThenInclude(x => x.Tag)
             .Where(x => x.DocumentNoteAccesses.Select(x => x.UserId).Contains(userId))
             .ToArrayAsync();
 

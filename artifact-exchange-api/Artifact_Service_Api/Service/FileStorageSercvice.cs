@@ -6,6 +6,7 @@ using System.Runtime;
 using System;
 using Microsoft.AspNetCore.Hosting;
 using System.Data;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Artifact_Service_Api.Service
 {
@@ -22,16 +23,16 @@ namespace Artifact_Service_Api.Service
             this.hostingEnv = env;
         }
 
-        public async Task<byte[]>?  GetFileBites(Models.File file)
+        public async Task<byte[]>?  GetFileBites(string serverFileName)
         {
             
-            var filePath = Path.Combine(_storagePath, file.ServerFileName);
+            var filePath = Path.Combine(_storagePath, serverFileName);
             if (!System.IO.File.Exists(filePath)) return null;
             return await System.IO.File.ReadAllBytesAsync(filePath);
         }
 
-        public IEnumerable<Task<byte[]>>? GetFilesBitesByNote(IEnumerable<Models.File> files) => 
-            files.Select(GetFileBites);
+        public IEnumerable<Task<byte[]>>? GetFilesBitesByNote(string[] serverFileNames) => 
+            serverFileNames.Select(GetFileBites);
 
         /*public IActionResult Upload(UploadModel upload)
 {

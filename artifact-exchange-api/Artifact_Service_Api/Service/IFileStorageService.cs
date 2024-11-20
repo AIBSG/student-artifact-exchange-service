@@ -2,8 +2,8 @@
 {
     public interface IFileStorageService
     {
-        public Task<byte[]>? GetFileBites(Models.File file);
-        public IEnumerable<Task<byte[]>>? GetFilesBitesByNote(IEnumerable<Models.File> files);
+        public Task<byte[]>? GetFileBites(string serverFileName);
+        public IEnumerable<Task<byte[]>>? GetFilesBitesByNote(string[] serverFileNames);
         public string SaveNewFileInStorage(IFormFile file);
     }
 }
