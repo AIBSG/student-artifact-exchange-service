@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Artifact_Service_Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241027081622_addAuthorToDocumentNote")]
-    partial class addAuthorToDocumentNote
+    [Migration("20241120091919_init-cloud")]
+    partial class initcloud
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,9 @@ namespace Artifact_Service_Api.Migrations
 
                     b.Property<Guid>("FileId")
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("IsOpen")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
@@ -103,9 +106,6 @@ namespace Artifact_Service_Api.Migrations
                     b.Property<string>("CustomFileName")
                         .HasColumnType("text");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("text");
-
                     b.Property<Guid?>("NoteId")
                         .HasColumnType("uuid");
 
@@ -130,6 +130,9 @@ namespace Artifact_Service_Api.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsOpen")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Text")
                         .HasColumnType("text");
@@ -166,6 +169,27 @@ namespace Artifact_Service_Api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("NoteAccesses");
+                });
+
+            modelBuilder.Entity("Artifact_Service_Api.Models.NoteFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("NoteId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileId");
+
+                    b.HasIndex("NoteId");
+
+                    b.ToTable("NoteFiles");
                 });
 
             modelBuilder.Entity("Artifact_Service_Api.Models.NoteTag", b =>
@@ -221,7 +245,7 @@ namespace Artifact_Service_Api.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
-                    b.Property<int>("RegistryCode")
+                    b.Property<int?>("RegistryCode")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -321,6 +345,25 @@ namespace Artifact_Service_Api.Migrations
                     b.Navigation("Note");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Artifact_Service_Api.Models.NoteFile", b =>
+                {
+                    b.HasOne("Artifact_Service_Api.Models.File", "File")
+                        .WithMany()
+                        .HasForeignKey("FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Artifact_Service_Api.Models.Note", "Note")
+                        .WithMany()
+                        .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("File");
+
+                    b.Navigation("Note");
                 });
 
             modelBuilder.Entity("Artifact_Service_Api.Models.NoteTag", b =>
