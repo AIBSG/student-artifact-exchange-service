@@ -11,30 +11,6 @@ const cancelDeleteEditFileButton = document.querySelector('.approve__cancel');
 const approveOpen = document.querySelector('.approve__open');
 const shareButton = editFileModal.querySelector('.file__share-button');
 const cancelButton = document.querySelector('.share__cancel');
-const fileEditTagInput = document.querySelector('#tag');
-
-
-// Функция для сохранения данных в localStorage
-function saveFileEditData() {
-   const fileEditData = {
-       title: fileEditTitleInput.value,
-       text: fileEditTextInput.value,
-       tag: fileEditTagInput.value 
-   };
-   localStorage.setItem('fileEditData', JSON.stringify(fileEditData));
-}
-
-// Функция для загрузки данных из localStorage
-function loadFileEditData() {
-  const savedFileEditData = localStorage.getItem('fileEditData');
-  if (savedFileEditData) {
-     const data = JSON.parse(savedFileEditData);
-     fileEditTitleInput.value = data.title;
-     fileEditTextInput.value = data.text;
-     fileEditTagInput.value = data.tag;
-  }
-  toggleSaveButton(); 
-}
 
 //Ограничение количества символов в заголовке и в описании
 if (fileEditTitleInput) {
@@ -42,7 +18,6 @@ if (fileEditTitleInput) {
       if (fileEditTitleInput.value.length > MAX_FILE_TITLE_LENGTH) {
          fileEditTitleInput.value = fileEditTitleInput.value.slice(0, MAX_FILE_TITLE_LENGTH);
       }
-      saveFileEditData();
    });
 }
 
@@ -51,13 +26,6 @@ if (fileEditTextInput) {
       if (fileEditTextInput.value.length > MAX_FILE_TEXT_LENGTH) {
          fileEditTextInput.value = fileEditTextInput.value.slice(0, MAX_FILE_TEXT_LENGTH);
       }
-      saveFileEditData();
-   });
-}
-
-if (fileEditTagInput) {
-   fileEditTagInput.addEventListener('input', () => {
-       saveFileEditData(); // Сохраняем данные после изменения текста
    });
 }
 
@@ -75,13 +43,11 @@ if (fileEditTitleInput && fileEditTextInput) {
 }
 
 function toggleSaveButton() {
-   if (fileEditTitleInput && fileEditTextInput) {
-      if (fileEditTitleInput.value.length > 0 && fileEditTextInput.value.length > 0) {
-         saveEditFileButton.classList.remove('isDisabled');
-      } else {
-         saveEditFileButton.classList.add('isDisabled');
-      }
-   }
+    if (fileEditTitleInput.value.length > 0 && fileEditTextInput.value.length > 0) {
+        saveEditFileButton.classList.remove('isDisabled');
+    } else {
+        saveEditFileButton.classList.add('isDisabled');
+    }
 }
 
 //Окрытие и закрытие окна с подтверждением удаления заметки-файла
@@ -105,5 +71,3 @@ if (shareButton) {
 if (cancelButton) {
    cancelButton.addEventListener('click', closeShareModal)
 }
-
-loadFileEditData();
