@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Переход для кнопки "Войти"
+    // Переход для кнопки "Войти".
     const loginBtn = document.querySelector('.login-btn');
     if (loginBtn) {
         loginBtn.addEventListener('click', () => {
