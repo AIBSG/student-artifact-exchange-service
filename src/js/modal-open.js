@@ -90,24 +90,6 @@ function saveShareModal() {
    }
 };
 
-
-readForAllCheckbox.addEventListener('change', () => {
-   const isChecked = readForAllCheckbox.checked;
-
-   // Если переключатель включен, изменяем режим всех пользователей на "Чтение"
-   if (isChecked) {
-       // Находим все элементы с режимом доступа
-       const userModeTexts = document.querySelectorAll('.user__mode-text');
-       
-       userModeTexts.forEach(modeText => {
-           modeText.textContent = 'Чтение';
-       });
-
-       alert('Режим доступа для всех пользователей был изменен на "Чтение".');
-   }
-});
-
-
 //Окрытие и закрытие окна с подтверждением удаления заметки
 if (deleteNoteButton) {
    deleteNoteButton.addEventListener('click', () => {
