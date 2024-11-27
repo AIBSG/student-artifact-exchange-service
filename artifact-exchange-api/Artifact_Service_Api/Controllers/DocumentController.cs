@@ -9,6 +9,7 @@ using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Artifact_Service_Api.Controllers
 {
