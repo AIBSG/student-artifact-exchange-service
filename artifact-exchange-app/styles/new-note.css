@@ -51,10 +51,15 @@ a {
    align-items: center;
    margin-top: 55px;
    margin-left: 16px;
+   margin-right: 16px;
 }
 
 .profile__name {
    font-weight: 500;
+   font-size: 14px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 }
 
 .profile__img {
