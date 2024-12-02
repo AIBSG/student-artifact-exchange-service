@@ -96,9 +96,18 @@ function loadFileEditData() {
    const savedFileEditData = localStorage.getItem('fileEditData');
    if (savedFileEditData) {
        const data = JSON.parse(savedFileEditData);
-       fileEditTitleInput.value = data.title;
-       fileEditTextInput.value = data.text;
-       fileEditTagInput.value = data.tag;
+
+       if (fileEditTitleInput) {
+        fileEditTitleInput.value = data.title || '';
+       }
+
+       if (fileEditTextInput) {
+        fileEditTextInput.value = data.text || '';
+       }
+
+       if (fileEditTagInput) {
+        fileEditTagInput.value = data.tag || '';
+       }
    }
    toggleSaveButton();
 }
@@ -177,4 +186,6 @@ if (cancelButton) {
    cancelButton.addEventListener('click', closeShareModal);
 }
 
-loadFileEditData();
+document.addEventListener('DOMContentLoaded', () => {
+    loadFileEditData();
+ });

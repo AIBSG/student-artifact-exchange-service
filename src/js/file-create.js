@@ -11,7 +11,7 @@ const createFileLinkContainer = document.querySelector('.file__link');
 const createFileOpenLink = document.querySelector('.file__open-link');
 const saveCreateFileButton = document.querySelector('.file__action-create-btn__save');
 const createFileDeleteButton = document.querySelector('.file__delete-button');
-const shareButton = createFileModal.querySelector('.file__share-button');
+const shareButton = document.querySelector('.file__share-button');
 const cancelButton = document.querySelector('.share__cancel');
 const fileTagInput = document.querySelector('#tag');
 
@@ -93,14 +93,21 @@ function saveFileData() {
 }
 // Функция для загрузки данных из localStorage
 function loadFileData() {
-  const savedFileData = localStorage.getItem('fileData');
-  if (savedFileData) {
-     const data = JSON.parse(savedFileData);
-     fileTitleInput.value = data.title;
-     fileTextInput.value = data.text;
-     fileTagInput.value = data.tag;
-  }
-  toggleSaveButton(); 
+   const savedFileData = localStorage.getItem('fileData');
+   if (savedFileData) {
+      const data = JSON.parse(savedFileData);
+
+      if (fileTitleInput) {
+         fileTitleInput.value = data.title || '';
+      }
+      if (fileTextInput) {
+         fileTextInput.value = data.text || '';
+      }
+      if (fileTagInput) {
+         fileTagInput.value = data.tag || '';
+      }
+   }
+   toggleSaveButton(); 
 }
 
 //Ограничение количества символов в заголовке и в описании
@@ -190,4 +197,6 @@ if (cancelButton) {
    cancelButton.addEventListener('click', closeShareModal)
 }
 
-loadFileData();
+document.addEventListener('DOMContentLoaded', () => {
+   loadFileData();
+});

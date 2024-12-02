@@ -1,4 +1,5 @@
 import { MAX_TITLE_LENGTH } from "./const.js";
+import { API_NOTE_CREATE_URL } from "./api.js";
 
 const noteTitleInput = document.querySelector('.input__note-title');
 const noteTextInput = document.querySelector('.input__note-text');
@@ -8,6 +9,62 @@ const fileOpenLink = document.querySelector('.file__open-link');
 const fileDeleteButton = document.querySelector('.file__delete-button');
 const saveNoteButton = document.querySelector('.save');
 const noteTagInput = document.querySelector('#tag');
+const shareCheckbox = document.querySelector('.share__input input[type="checkbox"]');
+const shareEmailInput = document.querySelector('.input__email');
+const shareStatusSelect = document.querySelector('.share__options');
+
+// Функция отправки данных на бэкенд
+async function sendNoteData() {
+   const formData = new FormData();
+
+   // Добавление данных заметки
+   formData.append('title', noteTitleInput.value);
+   formData.append('text', noteTextInput.value);
+   formData.append('tag', noteTagInput.value);
+
+   // Добавление файла (если он загружен)
+   if (noteFileInput.files.length > 0) {
+       formData.append('file', noteFileInput.files[0]);
+   }
+
+   // Добавление данных о доступе
+   formData.append('isPublic', shareCheckbox.checked);
+   if (shareEmailInput.value) {
+       formData.append('sharedWith', JSON.stringify([{
+           email: shareEmailInput.value,
+           access: shareStatusSelect.value
+       }]));
+   }
+
+   try {
+       const response = await fetch(API_NOTE_CREATE_URL, {
+           method: 'POST',
+           body: formData
+       });
+
+       if (response.ok) {
+           const result = await response.json();
+           alert('Заметка успешно сохранена!');
+           console.log(result);
+       } else {
+           const error = await response.json();
+           alert(`Ошибка сохранения: ${error.message}`);
+       }
+   } catch (err) {
+       console.error('Ошибка отправки данных:', err);
+       alert('Не удалось отправить данные на сервер.');
+   }
+}
+
+// Привязываем обработчик к кнопке сохранения
+saveNoteButton.addEventListener('click', (event) => {
+   event.preventDefault(); // Предотвращение стандартного поведения формы
+   if (!saveNoteButton.classList.contains('isDisabled')) {
+       sendNoteData();
+   } else {
+       alert('Заполните все поля перед сохранением.');
+   }
+});
 
 // Функция для сохранения данных в localStorage
 function saveNoteData() {
