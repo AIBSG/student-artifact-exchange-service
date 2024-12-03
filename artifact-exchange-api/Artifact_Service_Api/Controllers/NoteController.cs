@@ -64,7 +64,7 @@ public class NoteController(AppDbContext context) : ControllerBase
             .ToListAsync();
 
     [HttpPost]
-    public async Task<IActionResult> CreateNote(SaveNoteRequest request)
+    public async Task<IActionResult> CreateNote([FromForm]SaveNoteRequest request)
     {
         Guid id = Guid.NewGuid();
         var newPath = $"../wwwroot/noteFiles/{id}";
