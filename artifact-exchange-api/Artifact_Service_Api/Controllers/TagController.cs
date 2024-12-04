@@ -17,6 +17,22 @@ public class TagController(ITagService tagService, AppDbContext context) : Contr
     public async Task<IActionResult> GetAllTags() => Ok(await _tagService.GetAllTags());
 
     [HttpPost]
-    public async Task<IActionResult> CreateTag([FromForm]string tagName) =>
-        Ok(await _tagService.CreateTag(tagName));
+    public async Task<IActionResult> CreateTag([FromForm]string tagName)
+    {
+        if (string.IsNullOrEmpty(tagName)) return BadRequest();
+        else if (_context.Tags.Any(t => t.Name == tagName)) return BadRequest();
+
+        return Ok(await _tagService.CreateTag(tagName));
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteTag(Guid tagId)
+    {
+        var tag = await _context.Tags.FindAsync(tagId);
+        if (tag == null) return NotFound();
+        
+        _context.Tags.Remove(tag);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
 }
