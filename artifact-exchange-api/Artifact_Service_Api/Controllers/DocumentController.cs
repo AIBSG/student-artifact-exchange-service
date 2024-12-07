@@ -102,6 +102,12 @@ namespace Artifact_Service_Api.Controllers
             return Problem();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> OpenDocumentsByTags([FromQuery]List<string> tagNames) =>
+            Ok(await _fileService.OpenDocumentsByTags(tagNames));
 
+        [HttpGet]
+        public async Task<IActionResult> UserDocumentsByTags(Guid userId, [FromQuery]List<string> tagNames) =>
+            Ok(await _fileService.UserDocumentsByTags(userId, tagNames));
     }
 }

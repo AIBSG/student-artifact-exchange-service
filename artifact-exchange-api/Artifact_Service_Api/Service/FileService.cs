@@ -149,5 +149,36 @@ namespace Artifact_Service_Api.Service
             await _context.SaveChangesAsync();
             return await _context.DocumentNoteAccesses.Where(x=>x.DocumentNoteId.Equals(documentId)).Select(x=>x.User.Email).ToListAsync();
         }
+
+        public async Task<IEnumerable<DocumentNote>?> OpenDocumentsByTags(List<string> tagNames)
+        {
+            var openDocuments = await _context.DocumentNotes
+                .Where(d => d.IsOpen)
+                .Include(d => d.Author)
+                .Include(d => d.File)
+                .Include(d => d.DocumentNoteTags)
+                .ThenInclude(d => d.Tag)
+                .ToListAsync();
+            
+            foreach (var tagName in tagNames)
+                openDocuments = openDocuments.Where(d => d.DocumentNoteTags.Any(t => t.Tag.Name == tagName)).ToList();
+            
+            return openDocuments;
+        }
+
+        public async Task<IEnumerable<DocumentNote>?> UserDocumentsByTags(Guid userId, List<string> tagNames)
+        {
+            var userDocuments = await _context.DocumentNotes
+                .Where(d => d.Author.Id == userId)
+                .Include(d => d.File)
+                .Include(d => d.DocumentNoteTags)
+                .ThenInclude(d => d.Tag)
+                .ToListAsync();
+            
+            foreach (var tagName in tagNames)
+                userDocuments = userDocuments.Where(d => d.DocumentNoteTags.Any(t => t.Tag.Name == tagName)).ToList();
+
+            return userDocuments;
+        }
     }
 }

@@ -14,5 +14,8 @@ namespace Artifact_Service_Api.Service
         public Task<DocumentNote> SaveNewDocument(NewDocumentRequest request, string serverFileName);
 
         public  Task<IEnumerable<string>?> ChangeDocumentAccess(IEnumerable<string> emails, Guid documentId);
+
+        public Task<IEnumerable<DocumentNote>?> OpenDocumentsByTags(List<string> tagNames);
+        public Task<IEnumerable<DocumentNote>?> UserDocumentsByTags(Guid userId, List<string> tagNames);
     }
 }

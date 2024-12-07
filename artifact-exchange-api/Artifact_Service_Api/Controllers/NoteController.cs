@@ -3,6 +3,7 @@ using Artifact_Service_Api.Models;
 using Artifact_Service_Api.AppData;
 using Artifact_Service_Api.Dtos;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.XPath;
 
 namespace Artifact_Service_Api.Controllers;
 
@@ -197,5 +198,41 @@ public class NoteController(AppDbContext context) : ControllerBase
         _context.Notes.Remove(note);
         await _context.SaveChangesAsync();
         return Ok();
+    }
+
+    [HttpGet]
+    public async Task<IEnumerable<Note>> OpenNotesByTags([FromQuery]List<string> tagNames)
+    {
+        var openNotes = await _context.Notes
+            .Where(n => n.IsOpen)
+            .Include(n => n.Author)
+            .Include(n => n.Files)
+            .Include(n => n.NoteTags)
+            .ThenInclude(n => n.Tag)
+            .ToListAsync();
+
+        
+        foreach (var tagName in tagNames)
+        {
+            openNotes = openNotes.Where(n => n.NoteTags.Any(t => t.Tag.Name == tagName)).ToList();
+        }
+
+        return openNotes;
+    }
+
+    [HttpGet]
+    public async Task<IEnumerable<Note>> UserNotesByTags(Guid userId, [FromQuery]List<string> tagNames)
+    {
+        var userNotes = await _context.Notes
+            .Where(n => n.Author.Id == userId)
+            .Include(n => n.Files)
+            .Include(n => n.NoteTags)
+            .ThenInclude(n => n.Tag)
+            .ToListAsync();
+        
+        foreach (var tagName in tagNames)
+            userNotes = userNotes.Where(n => n.NoteTags.Any(t => t.Tag.Name == tagName)).ToList();
+        
+        return userNotes;
     }
 }
