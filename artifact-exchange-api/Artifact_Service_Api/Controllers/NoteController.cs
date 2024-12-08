@@ -91,19 +91,23 @@ public class NoteController(AppDbContext context) : ControllerBase
                 TagId = tag.Id
             });
         }
-        note.Files = [];
-        foreach (var file in request.Files)
-        {
-            var path = $"../wwwroot/noteFiles/{note.Id}/{file.FileName}";
-            using (var fs = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(fs);
-            }
 
-            note.Files.Add(new Models.File {
-                Id = Guid.NewGuid(),
-                CustomFileName = file.FileName
-            });
+        note.Files = [];
+        if (request.Files != null)
+        {
+            foreach (var file in request.Files)
+            {
+                var path = $"../wwwroot/noteFiles/{note.Id}/{file.FileName}";
+                using (var fs = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(fs);
+                }
+
+                note.Files.Add(new Models.File {
+                    Id = Guid.NewGuid(),
+                    CustomFileName = file.FileName
+                });
+            }
         }
 
         await _context.Notes.AddAsync(note);
@@ -206,7 +210,6 @@ public class NoteController(AppDbContext context) : ControllerBase
         var openNotes = await _context.Notes
             .Where(n => n.IsOpen)
             .Include(n => n.Author)
-            .Include(n => n.Files)
             .Include(n => n.NoteTags)
             .ThenInclude(n => n.Tag)
             .ToListAsync();
@@ -225,7 +228,6 @@ public class NoteController(AppDbContext context) : ControllerBase
     {
         var userNotes = await _context.Notes
             .Where(n => n.Author.Id == userId)
-            .Include(n => n.Files)
             .Include(n => n.NoteTags)
             .ThenInclude(n => n.Tag)
             .ToListAsync();
