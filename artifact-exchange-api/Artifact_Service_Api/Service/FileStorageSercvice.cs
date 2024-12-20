@@ -15,23 +15,23 @@ namespace Artifact_Service_Api.Service
 
         private Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnv;
         //костыль надо исправить 
-        private readonly string _storagePath = "C:\\Users\\gglol\\Desktop\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\FileStorage\\"; 
-       
+        private readonly string _storagePath = "C:\\Users\\gglol\\Desktop\\student-artifact-exchange-service\\artifact-exchange-api\\Artifact_Service_Api\\FileStorage\\";
+
 
         public FileStorageSercvice(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             this.hostingEnv = env;
         }
 
-        public async Task<byte[]>?  GetFileBites(string serverFileName)
+        public async Task<byte[]>? GetFileBites(string serverFileName)
         {
-            
+
             var filePath = Path.Combine(_storagePath, serverFileName);
             if (!System.IO.File.Exists(filePath)) return null;
             return await System.IO.File.ReadAllBytesAsync(filePath);
         }
 
-        public IEnumerable<Task<byte[]>>? GetFilesBitesByNote(string[] serverFileNames) => 
+        public IEnumerable<Task<byte[]>>? GetFilesBitesByNote(string[] serverFileNames) =>
             serverFileNames.Select(GetFileBites);
 
         /*public IActionResult Upload(UploadModel upload)
@@ -60,7 +60,7 @@ namespace Artifact_Service_Api.Service
             var serverFileName = string.Format("{0}{1}"
             , Guid.NewGuid().ToString("N")
             , Path.GetExtension(file.FileName));
-            
+
             var path = Path.Combine(_storagePath, serverFileName);
             using (FileStream fs = System.IO.File.Create(path))
             {

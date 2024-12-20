@@ -36,14 +36,14 @@ builder.Services.AddCors(options =>
     options.AddPolicy("Test",
                           policy =>
                           {
-                              policy.WithOrigins("http://127.0.0.1:5500")
+                              policy.AllowAnyOrigin()
                                                   .AllowAnyHeader()
                                                   .AllowAnyMethod();
                           });
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))); 
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -53,10 +53,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseCors("Test");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-
-app.UseCors("Test");
 app.MapControllers();
 app.Run();
