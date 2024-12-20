@@ -1,0 +1,70 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Custis/Modeus//Schedule Calendar App//RU
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:2e687c51-629b-4b09-b664-2310b1c0943b
+SEQUENCE:5
+ORGANIZER;CN=Modeus:MAILTO:noreply@modeus.org
+DTSTAMP;TZID=Asia/Yekaterinburg:20241218T100443
+DTSTART;TZID=Asia/Yekaterinburg:20240226T065000
+DTEND;TZID=Asia/Yekaterinburg:20240226T073500
+SUMMARY:Коммерциализация результатов инновационной деятельности (онлайн\, СПбГУ\, ОК) / Лекция / Экономика инженерии АТ-01
+LOCATION:https://inf-online.urfu.ru/ru/ По вопросам обращаться к Волковой Анне Владимировне\, ауд. Р-137\, Вт-Пт с 13:00 до 16:00
+DESCRIPTION:Лекционное занятие\n\nПреподаватель: Гайнетдинова Анастасия Витальевна\n\nПосмотреть в Моем расписании: https://urfu.modeus.org/schedule-calendar/my?selectedEvent=%7B%22eventId%22:%222e687c51-629b-4b09-b664-2310b1c0943b%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T06:50:00.000Z%22%7D\nПосмотреть в мобильной версии: https://urfu.modeus.org/schedule-calendar/mobile?selectedEvent=%7B%22eventId%22:%222e687c51-629b-4b09-b664-2310b1c0943b%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T06:50:00.000Z%22%7D\n
+CATEGORIES:Лекционное занятие
+CATEGORIES:Экономика инженерии
+END:VEVENT
+BEGIN:VEVENT
+UID:40a603c7-0743-46fd-8fe9-2902b4ba576e
+SEQUENCE:4
+ORGANIZER;CN=Modeus:MAILTO:noreply@modeus.org
+DTSTAMP;TZID=Asia/Yekaterinburg:20241218T100443
+DTSTART;TZID=Asia/Yekaterinburg:20240226T120000
+DTEND;TZID=Asia/Yekaterinburg:20240226T133000
+SUMMARY:Управление командой / Практика / Управление командой П\, АТ-01
+LOCATION:Мира\, 32 / Р211
+DESCRIPTION:Практическое занятие\n\nПреподаватель: Базаров Георгий Давидович\n\nПосмотреть в Моем расписании: https://urfu.modeus.org/schedule-calendar/my?selectedEvent=%7B%22eventId%22:%2240a603c7-0743-46fd-8fe9-2902b4ba576e%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T12:00:00.000Z%22%7D\nПосмотреть в мобильной версии: https://urfu.modeus.org/schedule-calendar/mobile?selectedEvent=%7B%22eventId%22:%2240a603c7-0743-46fd-8fe9-2902b4ba576e%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T12:00:00.000Z%22%7D\n
+CATEGORIES:Практическое занятие
+CATEGORIES:Управление командой
+END:VEVENT
+BEGIN:VEVENT
+UID:52c84534-de0c-40db-900e-8e74c21bd70b
+SEQUENCE:3
+ORGANIZER;CN=Modeus:MAILTO:noreply@modeus.org
+DTSTAMP;TZID=Asia/Yekaterinburg:20241218T100443
+DTSTART;TZID=Asia/Yekaterinburg:20240226T174000
+DTEND;TZID=Asia/Yekaterinburg:20240226T191000
+SUMMARY:Алгоритмы и анализ сложности / Лекционное занятие 3 / Алгоритмы и анализ сложности Л\, ЛБ\, К\, АТ-09
+LOCATION:Р339
+DESCRIPTION:Лекционное занятие\n\nРоль не определена: Мокрушин Андрей Анатольевич\, Трофимов Сергей Павлович\n\nПосмотреть в Моем расписании: https://urfu.modeus.org/schedule-calendar/my?selectedEvent=%7B%22eventId%22:%2252c84534-de0c-40db-900e-8e74c21bd70b%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T17:40:00.000Z%22%7D\nПосмотреть в мобильной версии: https://urfu.modeus.org/schedule-calendar/mobile?selectedEvent=%7B%22eventId%22:%2252c84534-de0c-40db-900e-8e74c21bd70b%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T17:40:00.000Z%22%7D\n
+CATEGORIES:Лекционное занятие
+CATEGORIES:Алгоритмы и анализ сложности
+END:VEVENT
+BEGIN:VEVENT
+UID:576c318b-668a-4213-9184-60b637c9b7ec
+SEQUENCE:5
+ORGANIZER;CN=Modeus:MAILTO:noreply@modeus.org
+DTSTAMP;TZID=Asia/Yekaterinburg:20241218T100443
+DTSTART;TZID=Asia/Yekaterinburg:20240226T160000
+DTEND;TZID=Asia/Yekaterinburg:20240226T173000
+SUMMARY:Архитектура ЭВМ / Лекция 3 / Архитектура ЭВМ Л-01
+LOCATION:https://teams.microsoft.com/l/channel/19%3AbwGa6mLCRZ1gNaClbXbv5PQQonVEGns2TjIcrTd2RMk1%40thread.tacv2/?groupId=f6f9bd9a-8505-47f8-99bd-477ca9cae204&tenantId=
+DESCRIPTION:Лекционное занятие / Информационная лекция\n\nПреподаватель: Харисов Азамат Робертович\n\nПосмотреть в Моем расписании: https://urfu.modeus.org/schedule-calendar/my?selectedEvent=%7B%22eventId%22:%22576c318b-668a-4213-9184-60b637c9b7ec%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T16:00:00.000Z%22%7D\nПосмотреть в мобильной версии: https://urfu.modeus.org/schedule-calendar/mobile?selectedEvent=%7B%22eventId%22:%22576c318b-668a-4213-9184-60b637c9b7ec%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T16:00:00.000Z%22%7D\n
+CATEGORIES:Лекционное занятие
+CATEGORIES:Архитектура ЭВМ
+END:VEVENT
+BEGIN:VEVENT
+UID:776b869c-f697-49db-aca4-1d9f1508d1fe
+SEQUENCE:8
+ORGANIZER;CN=Modeus:MAILTO:noreply@modeus.org
+DTSTAMP;TZID=Asia/Yekaterinburg:20241218T100443
+DTSTART;TZID=Asia/Yekaterinburg:20240226T191500
+DTEND;TZID=Asia/Yekaterinburg:20240226T204500
+SUMMARY:Компьютерные сети  (Традиционный курс)  / Лекция  / Компьютерные сети Л-01
+LOCATION:Дистанционно
+DESCRIPTION:Лекционное занятие / Лекция с обратной связью\n\nПреподаватель: Филимонов Александр Юрьевич\n\nПосмотреть в Моем расписании: https://urfu.modeus.org/schedule-calendar/my?selectedEvent=%7B%22eventId%22:%22776b869c-f697-49db-aca4-1d9f1508d1fe%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T19:15:00.000Z%22%7D\nПосмотреть в мобильной версии: https://urfu.modeus.org/schedule-calendar/mobile?selectedEvent=%7B%22eventId%22:%22776b869c-f697-49db-aca4-1d9f1508d1fe%22%7D&calendar=%7B%22view%22:%22agendaWeek%22\,%22date%22:%222024-02-26T19:15:00.000Z%22%7D\n
+CATEGORIES:Лекционное занятие
+CATEGORIES:Компьютерные сети
+END:VEVENT
+END:VCALENDAR
